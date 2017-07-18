@@ -8,7 +8,7 @@ import  'rxjs/Rx'
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-  posts //: any[]
+  posts 
 
   constructor(private postService: PostServiceService) { }
 

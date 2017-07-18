@@ -8,8 +8,16 @@ export class PostServiceService {
   
   constructor(private http: Http) { }
   
+  //return all posts
   retrieveAllPosts(){
     return this.http.get(this.postUrl)
+  }
+
+  getUserJobApplications(username) {
+    if (!username) 
+      throw new Error("No username provided");
+    else 
+      return this.http.get(`${this.postUrl}'myjobapp/${username}`)
   }
 
   //My own job post

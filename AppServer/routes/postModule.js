@@ -53,6 +53,14 @@ router.get('/myjobapp/:name', function (req, res, next) {
         .catch(err=>res.json(err))    
 });
 
+//Add new post 
+router.post('/add', urlparser, (req, res) => {
+    const newPost = new Post(req.body)
+    newPost.add().then(() => {
+        res.send({ status: true });
+    }).catch(err => res.send(err));
+})
+
 //get a single post
 // router.get('/:postid', function (request, response) {
 //     let postId = req.param('postid');
