@@ -14,6 +14,12 @@ let postSchema = new mongoose.Schema({
     preferredDate: Date,
     preferredTime: Date,
     status: String,
+    address     :   {
+                        street  :   String,
+                        city    :   String,     
+                        State   :   String,
+                        zipcode :   Number
+                    },
     waitingList: [
         {
             userName: String,

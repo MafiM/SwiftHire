@@ -9,7 +9,7 @@ export class PostServiceService {
   constructor(private http: Http) { }
   
   retrieveAllPosts(){
-    return this.http.get(this.postUrl)//.map((res:Response) => res.json())
+    return this.http.get(this.postUrl)
   }
 
   //My own job post

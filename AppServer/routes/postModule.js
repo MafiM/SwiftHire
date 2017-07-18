@@ -16,7 +16,9 @@ const status = {
 //get all posts
 router.get('/', function (req, res, next) {
     Post.get()
-        .then(data => res.json(data))
+        .then(data => {
+            res.json(JSON.stringify(data))
+        })
         .catch(err => res.json(err));
 });//checked
 

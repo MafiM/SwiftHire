@@ -8,7 +8,7 @@ import  'rxjs/Rx'
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-  posts : any[]
+  posts //: any[]
 
   constructor(private postService: PostServiceService) { }
 
@@ -16,7 +16,7 @@ export class MainComponent implements OnInit {
     this.postService.retrieveAllPosts()
       .map( data => data.json() )
       .subscribe(
-          data  =>  { this.posts =  data;  }, 
+          data  =>  { this.posts =  (JSON.parse(data));  }, 
           err   =>  { throw (err)});
   }
 }
