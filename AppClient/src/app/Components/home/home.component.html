@@ -7,16 +7,17 @@
       <li><a [routerLink]="['myPost']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">My Post</a></li>
       <li><a [routerLink]="['notification']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Notification</a></li>
       <li><a [routerLink]="['newPost']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Add New Post</a></li>
+      <li><a *ngIf="auth.isAuthenticated()" (click)="auth.logout()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Logout</a></li>
     </ul>
   </div>
   <div class="row">
-    <div class="panel panel-default col-sm-2">
+    <div class="panel panel-default col-sm-2" style="overflow:hidden">
       <div class="panel-body">
-        <img src='./src/app/images/user.png'/>
-        <p>User Name</p>
-        <p>useremail@email.com
+       <img src='{{loggedInUser?.picture}}}' style="height: 100px;width: 100px" />
+        <label>{{loggedInUser?.nickname}}</label>
+        <label>{{loggedInUser?.name}}</label>
       </div>
-    </div>
+    </div>  
     <div class="col-sm-10">
       <router-outlet></router-outlet>
 
