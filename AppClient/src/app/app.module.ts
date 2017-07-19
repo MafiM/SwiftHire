@@ -16,6 +16,7 @@ import { NotificationComponent } from './components/notification/notification.co
 import { NewPostComponent } from './components/new-post/new-post.component';
 import { MainComponent } from './components/main/main.component';
 import { LoginGuard } from "./services/login.guard";
+import { ApplicationComponent } from './components/application/application.component';
 
 //services
 import { AuthService  } from './services/auth/auth.service';
@@ -28,12 +29,14 @@ const APP_ROUTES = [
     path: 'home', 
     component: HomeComponent, 
     children: [
-      { path: 'main', component: MainComponent  },
+      { path: '', redirectTo: 'main', pathMatch: 'full' },
+      { path: 'main', component: MainComponent},
       { path: 'activities', component: ActivityComponent  },
       { path: 'myJob', component: MyJobComponent  },
       { path: 'myPost', component: MyPostComponent  },
       { path: 'notification', component: NotificationComponent  },
-      { path: 'newPost', component: NewPostComponent  }
+      { path: 'newPost', component: NewPostComponent  },
+      { path: 'apply', component: ApplicationComponent},
     ],CanActivate:[LoginGuard]
   },
 ]
@@ -48,7 +51,8 @@ const APP_ROUTES = [
     MyPostComponent,
     NotificationComponent,
     NewPostComponent,
-    MainComponent
+    MainComponent,
+    ApplicationComponent,
   ],
   imports: [
     BrowserModule,

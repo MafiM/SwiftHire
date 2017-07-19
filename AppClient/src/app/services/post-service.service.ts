@@ -9,7 +9,6 @@ export class PostServiceService {
   private postUrl = 'http://localhost:4000/api/posts/';
   private activityJobUrl = "currentjob/";
   private activityPostUrl = "currentpost/";
-  private
 
 
   constructor(private http: Http, private homeService: HomeService) { }
@@ -23,7 +22,7 @@ export class PostServiceService {
     if (!this.homeService.getUserName()) 
       throw new Error("No username provided");
     else 
-      return this.http.get(`${this.postUrl}'myjobapp/${this.homeService.getUserName()}`)
+      return this.http.post(`${this.postUrl}myjobapp/`, this.homeService.getUserName())
   }
 
   //user post Activities
@@ -44,5 +43,13 @@ export class PostServiceService {
   //add new post 
   addNewPost(body){
     return this.http.post(this.postUrl + 'add',body).map((res:Response) =>res.json());
+  }
+  getPost(id){
+    return this.http.post(this.postUrl + 'getPost', {'id':id})
+          .map(res=> res.json() )
+  }
+  applyPost(body) {
+    console.log(body)
+    
   }
 }

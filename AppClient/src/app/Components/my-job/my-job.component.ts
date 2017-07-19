@@ -15,7 +15,7 @@ export class MyJobComponent implements OnInit {
     this.postService.getUserJobApplications()
       .map( data => data.json() )
       .subscribe(
-          data  =>  { this.posts =  (JSON.parse(data));  }, 
+          data  =>  { if(data.status) this.posts =  (JSON.parse(data));  }, 
           err   =>  { throw (err)});
   }
 
