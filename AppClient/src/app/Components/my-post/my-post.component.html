@@ -1,3 +1,17 @@
-<p>
-  my-post works!
-</p>
+<div>
+  <div *ngIf="userPosts">
+    <div *ngFor="let post of userPosts">
+      <h3>{{post.title}}</h3>
+      <p><span *ngIf="post.category">{{post.category}} </span>
+        <span *ngIf="post.address"> {{post.address.city}} - {{post.address.state}} </span>
+        <span *ngIf="post.duration"> - {{post.duration}} </span></p>
+      <p>
+        {{post.description}}
+      </p>
+      <a>...more</a>
+      <p>Submitted applications (<span *ngIf="post.waitingList">{{post.waitingList.length}}</span>)</p>
+      <p>Client: {{post.createdBy}} <span>***</span>
+        <hr>
+    </div>
+  </div>
+</div> 

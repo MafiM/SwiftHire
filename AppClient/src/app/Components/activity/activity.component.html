@@ -2,9 +2,10 @@
   <div class="panel">
     <h1>My Current Activities</h1>
   </div>
-
-<div>
+ 
+ <div>
   <div *ngIf="userJobActivity">
+    <h3>My Current Job Activities </h3>
     <div *ngFor="let jobs of userJobActivity">
       <h3>{{jobs.title}}</h3>
       <p><span *ngIf="jobs.category">{{jobs.category}} </span>
@@ -19,10 +20,12 @@
         <hr>
     </div>
   </div>
-</div>
+</div>  
 
-<div>
+ <div>
+  
   <div *ngIf="userPostActivity">
+     <h3>My Current Post Activities </h3>
     <div *ngFor="let post of userPostActivity">
       <h3>{{post.title}}</h3>
       <p><span *ngIf="post.category">{{post.category}} </span>
@@ -37,4 +40,4 @@
         <hr>
     </div>
   </div>
-</div>
+</div> 
