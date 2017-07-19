@@ -21,6 +21,8 @@ import { ApplicationComponent } from './components/application/application.compo
 //services
 import { AuthService  } from './services/auth/auth.service';
 import { PostServiceService } from './services/post-service.service';
+import { UserService } from './services/user/user.service';
+
 import { HomeService  } from './services/home.service';
 
 const APP_ROUTES = [
@@ -62,8 +64,7 @@ const APP_ROUTES = [
     ReactiveFormsModule
   ],
   providers: [
-    PostServiceService,AuthService,LoginGuard,
-    HomeService
+    PostServiceService,AuthService,LoginGuard,UserService,HomeService
   ],
   bootstrap: [AppComponent]
 })

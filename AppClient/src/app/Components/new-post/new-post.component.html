@@ -1,19 +1,28 @@
 <form [formGroup]="myForm" (ngSubmit)="registerNewPost()">
   <!-- Title input-->
   <div class="control-group">
-    <label class="control-label">Address Line 1</label>
+    <label class="control-label">Title</label>
     <div class="controls">
       <input id="title" name="title" type="text" placeholder="post title" class="input-xlarge" [formControl]="myForm.controls['title']">
     </div>
     <div class="errors" *ngIf="!myForm.controls['title'].valid">Required</div>
   </div>
-
+<!-- description input-->
   <div class="form-group row">
     <label for="description" class="col-2 col-form-label">Description</label>
     <div class="col-10">
       <textarea class="form-control" name="description" id="description" rows="10" cols="40" [formControl]="myForm.controls['description']"></textarea>
     </div>
     <div class="errors" *ngIf="!myForm.controls['description'].valid">Required</div>
+  </div>
+
+  <!-- category input-->
+  <div class="control-group">
+    <label class="control-label">Category</label>
+    <div class="controls">
+      <input id="title" name="category" type="text" placeholder="post category" class="input-xlarge" [formControl]="myForm.controls['category']">
+    </div>
+    <div class="errors" *ngIf="!myForm.controls['category'].valid">Required</div>
   </div>
 
   <!-- duration value input-->
@@ -38,17 +47,26 @@
 
   <!-- duration input-->
   <div class="control-group">
+    <label class="control-label">Hourly Fee</label>
+    <div class="controls">
+      <input id="hourlyFee-unit" name="hourlyFee" [formControl]="myForm.controls['hourlyFee']" type="number" class="input-xlarge">
+    </div>
+    <div class="errors" *ngIf="!myForm.controls['hourlyFee'].valid">Required</div>
+  </div>
+
+  <!-- duration input-->
+  <div class="control-group">
     <label class="control-label">Prefered Date</label>
     <div class="controls">
-      <input id="duration-unit" name="preferedDate" [formControl]="myForm.controls['preferedDate']" type="date" class="input-xlarge">
+      <input id="preferedDate-unit" name="preferedDate" [formControl]="myForm.controls['preferedDate']" type="date" class="input-xlarge">
     </div>
     <div class="errors" *ngIf="!myForm.controls['preferedDate'].valid">Required</div>
   </div>
 
   <div class="control-group">
-    <label class="control-label">Prefered Date</label>
+    <label class="control-label">Prefered Time</label>
     <div class="controls">
-      <input id="duration-unit" name="preferedTime" [formControl]="myForm.controls['preferedTime']" type="time" class="input-xlarge">
+      <input id="duration-unit" name="preferedTime" [formControl]="myForm.controls['preferedTime']" type="date" class="input-xlarge">
     </div>
     <div class="errors" *ngIf="!myForm.controls['preferedTime'].valid">Required</div>
   </div>
@@ -59,10 +77,10 @@
   <div class="control-group">
     <label class="control-label">Address Line 1</label>
     <div class="controls">
-      <input id="address-line1" name="address" [formControl]="myForm.controls['address']" type="text" placeholder="street address"
+      <input id="address-line1" name="street" [formControl]="myForm.controls['street']" type="text" placeholder="street address"
         class="input-xlarge">
     </div>
-    <div class="errors" *ngIf="!myForm.controls['address'].valid">Required</div>
+    <div class="errors" *ngIf="!myForm.controls['street'].valid">Required</div>
   </div>
 
   <!-- city input-->
@@ -86,10 +104,10 @@
   <div class="control-group">
     <label class="control-label">Zip Code</label>
     <div class="controls">
-      <input id="postal-code" name="postalCode" [formControl]="myForm.controls['postalCode']" type="number" placeholder="zip code"
+      <input id="zip-code" name="zipCode" [formControl]="myForm.controls['zipCode']" type="number" placeholder="zip code"
         class="input-xlarge">
     </div>
-    <div class="errors" *ngIf="!myForm.controls['postalCode'].valid">Required</div>
+    <div class="errors" *ngIf="!myForm.controls['zipCode'].valid">Required</div>
   </div>
 
   <input type="submit" class="btn btn-primary" value="Register" [disabled]="!myForm.valid" />

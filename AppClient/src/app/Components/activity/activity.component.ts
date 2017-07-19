@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PostServiceService } from '../../services/post-service.service';
+import { HomeService } from '../../services/home.service';
 import { Observable } from 'rxjs';
 @Component({
   selector: 'app-activity',
@@ -11,8 +12,7 @@ export class ActivityComponent implements OnInit {
   private userJobActivity;
   private userPostActivity;
 
-  constructor(private service: PostServiceService) {
-
+  constructor(private postService: PostServiceService) {
   }
 
   ngOnInit() {
@@ -21,18 +21,20 @@ export class ActivityComponent implements OnInit {
   }
 
   getAllJobActivities() {
-    this.service.getUserJobActivities(name).subscribe(data => {
-      this.userJobActivity = JSON.parse(data);
-      console.log(this.userJobActivity)
-    }, err => {
-      throw err;
-    });
+      this.postService.getUserJobActivities().subscribe(data => {
+        console.log(data)
+        this.userJobActivity = JSON.parse(data);
+        console.log(this.userPostActivity)
+      }, err => {
+        throw err;
+      });
 
   }
   getAllPostActivities() {
-    this.service.getUserPostsActivities(name).subscribe(data => {
-      this.userPostActivity = JSON.parse(data);
-      console.log(this.userJobActivity)
+    this.postService.getUserPostActivities().subscribe(data => {
+        console.log(data);
+        this.userPostActivity =JSON.parse(data);
+        console.log(this.userPostActivity)
     }, err => {
       throw err;
     });

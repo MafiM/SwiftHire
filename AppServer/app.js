@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 // Routes Modules
-var urlparser = bodyParser.urlencoded({ extended: false })
+var urlparser = bodyParser.urlencoded({ extended: true })
 
 var posts = require('./routes/postModule');
 var users = require('./routes/userModule');
