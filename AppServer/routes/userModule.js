@@ -44,7 +44,7 @@ router.get('/', function (req, res, next) {
             res.json(JSON.stringify(data))
         })
         .catch(err => res.json(err));
-});//checked
+});
 
 //return currently logged in user
 router.post('/loggedin', (req, res) => {
@@ -64,6 +64,16 @@ router.post('/add', (req, res) => {
     }
 })
 
+//validate user email
+router.post('/validate/', function (req, res, next) {
+    User.get(req.body.email)
+        .then(data => { 
+            res.send(JOSON.stringify({isCorrectEmail:true}));
+                })
+        .catch(err => {
+             res.send(JOSON.stringify({isCorrectEmail:false}));
+         });
+});
 
 module.exports = router;
 

@@ -10,10 +10,10 @@ export class PostServiceService {
   private activityJobUrl = "currentjob/";
   private activityPostUrl = "currentpost/";
   private bodyData: {}
-
   constructor(private http: Http, private homeService: HomeService) {
     
   }
+
 
   //return all posts
   retrieveAllPosts() {
