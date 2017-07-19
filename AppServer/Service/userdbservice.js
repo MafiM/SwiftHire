@@ -4,9 +4,9 @@ var mongoose  = require('mongoose')
 mongoose.connect('mongodb://admin1:admin1@ds161262.mlab.com:61262/swifthire', {useMongoClient : true})
 
 let userSchema = new mongoose.Schema({
-    userName    :   String,
+    userName    :   String,// this is for displaying Name like : Rabin Shrestha
     password    :   String,
-    email       :   String,
+    email       :   String, // this is email address that we use for login,search
     address     :   {
                         street  :   String,
                         city    :   String,     
@@ -15,18 +15,18 @@ let userSchema = new mongoose.Schema({
                     },
     picPath     :   {fileName:   String, ext: String},
     rating      :   Number,
-    postApplication:  String    
+    postApplication:  [String]   
 })
 
-userSchema.statics.get = function(userName = null){
+userSchema.statics.get = function(email = null){
     return new Promise((res, rej)=>{    
-        if (userName === null){ 
+        if (email === null){ 
             User.find({}, function(err, data){
                 if (err) rej(err)
                 res(JSON.stringify(data))
             })
         } else {
-            User.find({_id : id}, function(err, data){
+            User.find({'email' : email}, function(err, data){
                 if (err) rej(err)
                 res(JSON.stringify(data))
             })
@@ -35,12 +35,12 @@ userSchema.statics.get = function(userName = null){
 }
 userSchema.methods.add = function() {
     this.save(function(err){
-        if (err) throw err
+        if (err) return  err
         console.log("Successfully Added!")
     })
 }
 userSchema.methods.update = function() {
-    User.find({userName : this.userName}, function(err, user){
+    User.find({email : this.email}, function(err, user){
         if(err) throw err
         console.log(user)
         user = this
@@ -54,6 +54,6 @@ userSchema.methods.remove = function(uname) {
     })
 }
 
-let User = mongoose.model('User', userSchema)
+let User = mongoose.model('User', userSchema) // this is the model, like a class to be used for saving data into database
 
 module.exports = User;

@@ -4,9 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+// Routes Modules
 var posts = require('./routes/postModule');
-
+var users = require('./routes/userModule');
 var app = express();
 
 // view engine setup
@@ -29,7 +29,10 @@ app.use(function (req, res, next) {
     next();
 }); 
 
+
+//Using our routes
 app.use('/api/posts', posts);
+app.use('/api/users', users);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
