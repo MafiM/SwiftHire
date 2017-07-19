@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http'
 import 'rxjs/Rx';
 
+import { HomeService  } from '../services/home.service';
+
 @Injectable()
 export class PostServiceService {
   private postUrl = 'http://localhost:4000/api/posts/';
@@ -10,18 +12,18 @@ export class PostServiceService {
   private
 
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private homeService: HomeService) { }
   
   //return all posts
-  retrieveAllPosts(){
+  retrieveAllPosts(){ 
     return this.http.get(this.postUrl).map(res =>res.json())
   }
 
-  getUserJobApplications(username) {
-    if (!username) 
+  getUserJobApplications() {
+    if (!this.homeService.getUserName()) 
       throw new Error("No username provided");
     else 
-      return this.http.get(`${this.postUrl}'myjobapp/${username}`)
+      return this.http.get(`${this.postUrl}'myjobapp/${this.homeService.getUserName()}`)
   }
 
   //user post Activities

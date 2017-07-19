@@ -4,8 +4,6 @@ import { RouterModule, Routes } from '@angular/router'
 import { HttpModule } from '@angular/http'
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import {AuthService  } from './services/auth/auth.service';
-
 
 //components
 import { AppComponent } from './app.component';
@@ -20,7 +18,9 @@ import { MainComponent } from './components/main/main.component';
 import { LoginGuard } from "./services/login.guard";
 
 //services
+import { AuthService  } from './services/auth/auth.service';
 import { PostServiceService } from './services/post-service.service';
+import { HomeService  } from './services/home.service';
 
 const APP_ROUTES = [
   {path: 'login', component: LoginComponent},
@@ -58,7 +58,8 @@ const APP_ROUTES = [
     ReactiveFormsModule
   ],
   providers: [
-    PostServiceService,AuthService,LoginGuard
+    PostServiceService,AuthService,LoginGuard,
+    HomeService
   ],
   bootstrap: [AppComponent]
 })

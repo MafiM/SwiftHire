@@ -71,8 +71,8 @@ router.post('/mypost', function (request, response) {
 })
 
 //get users job applications ( MY job applications)
-router.get('/myjobapp/:name', function (req, res, next) {
-    const uname = req.params.name;
+router.post('/myjobapp', function (req, res, next) {
+    const uname = req.body;
     Post.get({ 'waitingList.userName': uname })
         .then(p => { res.json(p) })
         .catch(err => res.json(err))
