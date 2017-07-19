@@ -55,8 +55,7 @@ router.post('/loggedin', (req, res) => {
 })
 
 // add new user in database
-router.post('/add', (req, res) => {
-    
+router.post('/add', (req, res) => {    
 
     console.log("user details body is :"+req.body);
     const user = new User(req.body); 

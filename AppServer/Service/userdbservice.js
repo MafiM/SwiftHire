@@ -11,7 +11,7 @@ let userSchema = new mongoose.Schema({
                         street  :   String,
                         city    :   String,     
                         State   :   String,
-                        zipcode :   Number
+                        zipcode :   Number,
                     },
     picPath     :   {fileName:   String, ext: String},
     rating      :   Number,
