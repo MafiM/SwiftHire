@@ -1,3 +1,97 @@
-<p>
-  new-post works!
-</p>
+<form [formGroup]="myForm" (ngSubmit)="registerNewPost()">
+  <!-- Title input-->
+  <div class="control-group">
+    <label class="control-label">Address Line 1</label>
+    <div class="controls">
+      <input id="title" name="title" type="text" placeholder="post title" class="input-xlarge" [formControl]="myForm.controls['title']">
+    </div>
+    <div class="errors" *ngIf="!myForm.controls['title'].valid">Required</div>
+  </div>
+
+  <div class="form-group row">
+    <label for="description" class="col-2 col-form-label">Description</label>
+    <div class="col-10">
+      <textarea class="form-control" name="description" id="description" rows="10" cols="40" [formControl]="myForm.controls['description']"></textarea>
+    </div>
+    <div class="errors" *ngIf="!myForm.controls['description'].valid">Required</div>
+  </div>
+
+  <!-- duration value input-->
+  <div class="control-group">
+    <label class="control-label">duration value</label>
+    <div class="controls">
+      <input id="duration" name="durationValue" [formControl]="myForm.controls['durationValue']" type="number" placeholder="duration value"
+        class="input-xlarge">
+    </div>
+    <div class="errors" *ngIf="!myForm.controls['durationValue'].valid">Required</div>
+  </div>
+
+  <!-- duration unit input-->
+  <div class="control-group">
+    <label class="control-label">duration unit</label>
+    <div class="controls">
+      <input id="duration-unit" name="durationUnit" [formControl]="myForm.controls['durationUnit']" type="number" placeholder="duration unit"
+        class="input-xlarge">
+    </div>
+    <div class="errors" *ngIf="!myForm.controls['durationUnit'].valid">Required</div>
+  </div>
+
+  <!-- duration input-->
+  <div class="control-group">
+    <label class="control-label">Prefered Date</label>
+    <div class="controls">
+      <input id="duration-unit" name="preferedDate" [formControl]="myForm.controls['preferedDate']" type="date" class="input-xlarge">
+    </div>
+    <div class="errors" *ngIf="!myForm.controls['preferedDate'].valid">Required</div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">Prefered Date</label>
+    <div class="controls">
+      <input id="duration-unit" name="preferedTime" [formControl]="myForm.controls['preferedTime']" type="time" class="input-xlarge">
+    </div>
+    <div class="errors" *ngIf="!myForm.controls['preferedTime'].valid">Required</div>
+  </div>
+
+  <h2>Address</h2>
+
+  <!-- address-line1 input-->
+  <div class="control-group">
+    <label class="control-label">Address Line 1</label>
+    <div class="controls">
+      <input id="address-line1" name="address" [formControl]="myForm.controls['address']" type="text" placeholder="street address"
+        class="input-xlarge">
+    </div>
+    <div class="errors" *ngIf="!myForm.controls['address'].valid">Required</div>
+  </div>
+
+  <!-- city input-->
+  <div class="control-group">
+    <label class="control-label">City / Town</label>
+    <div class="controls">
+      <input id="city" name="city" [formControl]="myForm.controls['city']" type="text" placeholder="city" class="input-xlarge">
+    </div>
+    <div class="errors" *ngIf="!myForm.controls['city'].valid">Required</div>
+  </div>
+  <!-- region input-->
+  <div class="control-group">
+    <label class="control-label">State </label>
+    <div class="controls">
+      <input id="region" name="region" [formControl]="myForm.controls['region']" type="text" placeholder="state / province / region"
+        class="input-xlarge">
+    </div>
+    <div class="errors" *ngIf="!myForm.controls['region'].valid">Required</div>
+  </div>
+  <!-- postal-code input-->
+  <div class="control-group">
+    <label class="control-label">Zip Code</label>
+    <div class="controls">
+      <input id="postal-code" name="postalCode" [formControl]="myForm.controls['postalCode']" type="number" placeholder="zip code"
+        class="input-xlarge">
+    </div>
+    <div class="errors" *ngIf="!myForm.controls['postalCode'].valid">Required</div>
+  </div>
+
+  <input type="submit" class="btn btn-primary" value="Register" [disabled]="!myForm.valid" />
+
+</form>

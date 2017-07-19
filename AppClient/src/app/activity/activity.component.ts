@@ -8,16 +8,33 @@ import { Observable } from 'rxjs';
 })
 export class ActivityComponent implements OnInit {
 
-  constructor(private service:PostServiceService) { 
-    
+  private userJobActivity;
+  private userPostActivity;
+
+  constructor(private service: PostServiceService) {
+
   }
 
   ngOnInit() {
+    this.getAllJobActivities();
+    this.getAllPostActivities();
   }
 
-  getAllActivities(){
-    
-  }
+  getAllJobActivities() {
+    this.service.getUserJobActivities(name).subscribe(data => {
+      this.userJobActivity = JSON.parse(data);
+      console.log(this.userJobActivity)
+    }, err => {
+      throw err;
+    });
 
-  
+  }
+  getAllPostActivities() {
+    this.service.getUserPostsActivities(name).subscribe(data => {
+      this.userPostActivity = JSON.parse(data);
+      console.log(this.userJobActivity)
+    }, err => {
+      throw err;
+    });
+  }
 }

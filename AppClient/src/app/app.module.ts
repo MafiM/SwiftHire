@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router'
 import { HttpModule } from '@angular/http'
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 //components
 import { AppComponent } from './app.component';
@@ -48,7 +50,9 @@ const APP_ROUTES = [
   imports: [
     BrowserModule,
     RouterModule.forRoot(APP_ROUTES),
-    HttpModule
+    HttpModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     PostServiceService

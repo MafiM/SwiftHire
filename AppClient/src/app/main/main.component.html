@@ -8,23 +8,18 @@
     <input type="text" class="input-sm" placeholder="Min Fee">
   </div>
 </div>
-<!--<div *ngIf="posts">
-  <ul *ngFor="let post of posts">  
-    <li>{{post.title}}
-      
-    </li>
-  </ul>
-</div>-->
-<h3>post.title</h3>
-      <p>post.category- location - duration fee</p>
+<div *ngIf="posts">
+  <div *ngFor="let post of posts">  
+    <h3>{{post.title}}</h3>
+      <p><span *ngIf="post.category">{{post.category}} </span>
+      <span *ngIf="post.address"> {{post.address.city}} - {{post.address.state}} </span> 
+      <span *ngIf="post.duration"> - {{post.duration}} </span></p>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        {{post.description}}
       </p>
       <a>...more</a>
-      <p>Submitted applications (5)</p>
-      <p>Client: clientName <span>***</span>
+      <p>Submitted applications (<span *ngIf="post.waitingList">{{post.waitingList.length}}</span>)</p>
+      <p>Client: {{post.createdBy}} <span>***</span>
+      <hr>
+  </div>
+</div>

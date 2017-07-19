@@ -2,54 +2,68 @@ var express = require('express');
 var path = require('path');
 var router = express.Router();
 var appRootDir = require('app-root-dir').get();
+var bodyParser = require('body-parser');
+var urlparser = bodyParser.urlencoded({ extended: false })
 
 //requiring the dataservice
 var Post = require(path.join(appRootDir, '/service/postdbservice'));
 const status = {
-    NEW         :   'new',
-    GRANTED     :   'granted',
-    COMPLETED   :   'completed',
-    CANCELLED   :   'cancelled',
-    EXPIRED     :   'expired'
+    NEW: 'new',
+    GRANTED: 'granted',
+    COMPLETED: 'completed',
+    CANCELLED: 'cancelled',
+    EXPIRED: 'expired'
 }
 
 //get all posts
 router.get('/', function (req, res, next) {
     Post.get()
-        .then(data => res.json(data))
+        .then(data => {
+            //res.json(JSON.stringify(data))
+            res.json(data)
+        })
         .catch(err => res.json(err));
 });//checked
 
 //return all current jobs for the user (activities)
 router.get('/currentjob/:name', (req, res) => {
-    const uname = req.params.name; 
-    Post.get({$and: [{'grantedTo': uname},{'status':status.GRANTED}]})
-        .then(p => {res.json(p)})
-        .catch(err=>res.json(err))
+    const uname = req.params.name;
+    Post.get({ $and: [{ 'grantedTo': uname }, { 'status': status.GRANTED }] })
+        .then(p => { res.json(p) })
+        .catch(err => res.json(err))
 })
 //return all current posts for the user (activities)
 router.get('/currentpost/:name', (req, res) => {
-    const uname = req.params.name; 
-    Post.get({$and: [{'createdBy': uname},{'status':status.GRANTED}]})
-        .then(p => {res.json(p)})
-        .catch(err=>res.json(err))
+    const uname = req.params.name;
+    Post.get({ $and: [{ 'createdBy': uname }, { 'status': status.GRANTED }] })
+        .then(p => { res.json(p) })
+        .catch(err => res.json(err))
 })
 
 //my own job posts( created jobs by the user)
 router.get('/mypost/:name', function (request, response) {
-    const uname = req.params.name; 
-    Post.get({'createdBy': uname})
-        .then(p => {res.json(p)})
-        .catch(err=>res.json(err))
+    const uname = req.params.name;
+    Post.get({ 'createdBy': uname })
+        .then(p => { res.json(p) })
+        .catch(err => res.json(err))
 })
 
 //get users job applications ( MY job applications)
 router.get('/myjobapp/:name', function (req, res, next) {
-    const uname = req.params.name; 
-    Post.get({'waitingList.userName': uname})
-        .then(p => {res.json(p)})
-        .catch(err=>res.json(err))    
+    const uname = req.params.name;
+    Post.get({ 'waitingList.userName': uname })
+        .then(p => { res.json(p) })
+        .catch(err => res.json(err))
 });
+
+//Add new post 
+router.post('/add', urlparser, (req, res) => {
+    const newPost = new Post(req.body)
+    console.log(req.body)
+    newPost.add().then(() => {
+        res.json({ 'status': 'true' });
+    }).catch(err => res.send(err));
+})
 
 //get a single post
 // router.get('/:postid', function (request, response) {
@@ -119,12 +133,12 @@ router.get('/myjobapp/:name', function (req, res, next) {
 //update post 
 //router.put('update/:postid', function (request, response) {
 
-    // let data= new Post();
+// let data= new Post();
 
-    // data.update(request.body);
-    // if (true) {
-    //     res.json({ status: "success" });
-    // }
+// data.update(request.body);
+// if (true) {
+//     res.json({ status: "success" });
+// }
 //})
 
 //delete a post 
@@ -159,7 +173,7 @@ function addNewPost(request) {
     //     'comments': []
     // }
 
-        console.log("The function");
+    console.log("The function");
     let data = {
         'title': "My first job",
         'description': "hdjhjdjkkjjkhjhnjkadjfakdjlhkaddj",
@@ -181,4 +195,3 @@ function addNewPost(request) {
 }
 
 module.exports = router;
-
