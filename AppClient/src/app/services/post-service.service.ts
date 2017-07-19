@@ -7,8 +7,7 @@ export class PostServiceService {
   private postUrl = 'http://localhost:4000/api/posts/';
   private activityJobUrl = "currentjob/";
   private activityPostUrl = "currentpost/";
-  private
-
+  
 
   constructor(private http: Http) { }
   
