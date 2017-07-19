@@ -1,12 +1,16 @@
-<h3>
-  Job Applications
-</h3>
-<div *ngIf="posts; else noPosts">
-  <div *ngFor="let post of posts"> 
-    <div class="clearfix">
-      <h3 class="pull-left">{{post.title}}</h3>
-      <!--<p class="pull-right">{{post.waitingList}}</p>-->
-    </div> 
+<div class="panel panel-default">
+  <div class="panel-body">
+    <span>Search: </span>
+    <select class="input-sm">
+      <option>Select category</option>
+    </select>
+    <input type="text" class="input-sm" placeholder="Location">
+    <input type="text" class="input-sm" placeholder="Min Fee">
+  </div>
+</div>
+<div *ngIf="posts">
+  <div *ngFor="let post of posts">  
+    <h3>{{post.title}}</h3>
       <p><span *ngIf="post.category">{{post.category}} </span>
       <span *ngIf="post.address"> {{post.address.city}} - {{post.address.state}} </span> 
       <span *ngIf="post.duration"> - {{post.duration}} </span></p>
@@ -19,6 +23,3 @@
       <hr>
   </div>
 </div>
-<ng-template #noPosts>
-  <p><i>You have 0 job applications</i></p>
-</ng-template>

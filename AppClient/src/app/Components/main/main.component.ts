@@ -8,15 +8,14 @@ import  'rxjs/Rx'
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-  posts //: any[]
+  posts : {}
 
   constructor(private postService: PostServiceService) { }
 
   ngOnInit() {
-    this.postService.retrieveAllPosts()
-      .map( data => data.json() )
+   this.postService.retrieveAllPosts()
       .subscribe(
-          data  =>  { this.posts =  (JSON.parse(data));  }, 
+          data  =>  { this.posts =  JSON.parse(data); }, 
           err   =>  { throw (err)});
   }
 }

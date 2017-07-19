@@ -1,35 +1,40 @@
-<div class="container">
-  <div class="jumbotron">
-    <h1>My Current projects</h1>
+
+  <div class="panel">
+    <h1>My Current Activities</h1>
   </div>
-  <p>Project Name </p>
-  <p>Deadline :</p>
-  <p>Total Payment: </p>
-  <p>Hourly Payment </p>
+
+<div>
+  <div *ngIf="userJobActivity">
+    <div *ngFor="let jobs of userJobActivity">
+      <h3>{{jobs.title}}</h3>
+      <p><span *ngIf="jobs.category">{{jobs.category}} </span>
+        <span *ngIf="jobs.address"> {{jobs.address.city}} - {{jobs.address.state}} </span>
+        <span *ngIf="jobs.duration"> - {{jobs.duration}} </span></p>
+      <p>
+        {{jobs.description}}
+      </p>
+      <a>...more</a>
+      <p>Submitted applications (<span *ngIf="jobs.waitingList">{{jobs.waitingList.length}}</span>)</p>
+      <p>Client: {{jobs.createdBy}} <span>***</span>
+        <hr>
+    </div>
+  </div>
 </div>
 
-<div class="container">
-  <h2>Basic Modal Example</h2>
-  <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
-
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-          <p>Some text in the modal.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
+<div>
+  <div *ngIf="userPostActivity">
+    <div *ngFor="let post of userPostActivity">
+      <h3>{{post.title}}</h3>
+      <p><span *ngIf="post.category">{{post.category}} </span>
+        <span *ngIf="post.address"> {{post.address.city}} - {{post.address.state}} </span>
+        <span *ngIf="post.duration"> - {{post.duration}} </span></p>
+      <p>
+        {{post.description}}
+      </p>
+      <a>...more</a>
+      <p>Submitted applications (<span *ngIf="post.waitingList">{{post.waitingList.length}}</span>)</p>
+      <p>Client: {{post.createdBy}} <span>***</span>
+        <hr>
     </div>
   </div>
 </div>
