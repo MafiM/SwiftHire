@@ -21,7 +21,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.auth.handleAuthentication();
-    this.getAllPosts();
     this.loggedInUser = JSON.parse(localStorage.getItem('profile'));
 
     this.auth.loggedIn.subscribe(profile => {
@@ -31,16 +30,5 @@ export class HomeComponent implements OnInit {
     }
     );
   }
-
-
-getAllPosts() {
-  this.service.retrieveAllPosts().subscribe(data => {
-    this.postData = data;
-    console.log(this.postData)
-  }, err => {
-    throw err;
-  });
-
-}
 }
 
