@@ -13,8 +13,10 @@ export class HomeComponent implements OnInit {
   private posts;
 
   private postData;
-  private data;
-  constructor(private service: PostServiceService) { }
+
+  constructor(private service: PostServiceService) {
+  
+  }
 
   ngOnInit() {
 

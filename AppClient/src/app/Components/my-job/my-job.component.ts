@@ -12,7 +12,7 @@ export class MyJobComponent implements OnInit {
   constructor(private postService: PostServiceService) { }
 
   ngOnInit() {
-    this.postService.getUserJobApplications('n')
+    this.postService.getUserJobApplications()
       .map( data => data.json() )
       .subscribe(
           data  =>  { this.posts =  (JSON.parse(data));  }, 

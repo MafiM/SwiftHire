@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router'
 import { HttpModule } from '@angular/http'
-import {AuthService  } from './services/auth/auth.service';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 //components
@@ -18,7 +19,9 @@ import { MainComponent } from './components/main/main.component';
 import { LoginGuard } from "./services/login.guard";
 
 //services
+import { AuthService  } from './services/auth/auth.service';
 import { PostServiceService } from './services/post-service.service';
+import { HomeService  } from './services/home.service';
 
 const APP_ROUTES = [
   {path: 'login', component: LoginComponent},
@@ -51,10 +54,13 @@ const APP_ROUTES = [
   imports: [
     BrowserModule,
     RouterModule.forRoot(APP_ROUTES),
-    HttpModule
+    HttpModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
-    PostServiceService,AuthService,LoginGuard
+    PostServiceService,AuthService,LoginGuard,
+    HomeService
   ],
   bootstrap: [AppComponent]
 })

@@ -2,15 +2,17 @@ var express = require('express');
 var path = require('path');
 var router = express.Router();
 var appRootDir = require('app-root-dir').get();
+var bodyParser = require('body-parser');
+var urlparser = bodyParser.urlencoded({ extended: false })
 
 //requiring the dataservice
 var Post = require(path.join(appRootDir, '/service/postdbservice'));
 const status = {
-    NEW         :   'new',
-    GRANTED     :   'granted',
-    COMPLETED   :   'completed',
-    CANCELLED   :   'cancelled',
-    EXPIRED     :   'expired'
+    NEW: 'new',
+    GRANTED: 'granted',
+    COMPLETED: 'completed',
+    CANCELLED: 'cancelled',
+    EXPIRED: 'expired'
 }
 
 //get all posts
@@ -24,6 +26,28 @@ router.get('/', function (req, res, next) {
 });//checked
 
 //return all current jobs for the user (activities)
+router.get('/currentjob/:name', (req, res) => {
+    const uname = req.params.name;
+    Post.get({ $and: [{ 'grantedTo': uname }, { 'status': status.GRANTED }] })
+        .then(p => { res.json(p) })
+        .catch(err => res.json(err))
+})
+//return all current posts for the user (activities)
+router.get('/currentpost/:name', (req, res) => {
+    const uname = req.params.name;
+    Post.get({ $and: [{ 'createdBy': uname }, { 'status': status.GRANTED }] })
+        .then(p => { res.json(p) })
+        .catch(err => res.json(err))
+})
+
+//my own job posts( created jobs by the user)
+router.get('/mypost/:name', function (request, response) {
+    const uname = req.params.name;
+    Post.get({ 'createdBy': uname })
+        .then(p => { res.json(p) })
+        .catch(err => res.json(err))
+})
+
 router.post('/currentjob', (req, res) => {
     const uname = req.body; 
     Post.get({$and: [{'grantedTo': uname},{'status':status.GRANTED}]})
@@ -47,19 +71,20 @@ router.post('/mypost', function (request, response) {
 })
 
 //get users job applications ( MY job applications)
-router.get('/myjobapp/:name', function (req, res, next) {
-    const uname = req.params.name; 
-    Post.get({'waitingList.userName': uname})
-        .then(p => {res.json(p)})
-        .catch(err=>res.json(err))    
+router.post('/myjobapp', function (req, res, next) {
+    const uname = req.body;
+    Post.get({ 'waitingList.userName': uname })
+        .then(p => { res.json(p) })
+        .catch(err => res.json(err))
 });
 
 //Add new post 
-router.post('/add',  (req, res) => {
+router.post('/add', urlparser, (req, res) => {
     const newPost = new Post(req.body)
+    console.log(req.body)
     newPost.add().then(() => {
-        res.send({ status: true });
-    }).catch(err => res.send(err));
+        res.json({ 'status': 'true' });
+    })
 })
 
 //get a single post
@@ -130,12 +155,12 @@ router.post('/add',  (req, res) => {
 //update post 
 //router.put('update/:postid', function (request, response) {
 
-    // let data= new Post();
+// let data= new Post();
 
-    // data.update(request.body);
-    // if (true) {
-    //     res.json({ status: "success" });
-    // }
+// data.update(request.body);
+// if (true) {
+//     res.json({ status: "success" });
+// }
 //})
 
 //delete a post 
@@ -148,48 +173,4 @@ router.post('/add',  (req, res) => {
 
 // })
 
-//add new post to the database function
-function addNewPost(request) {
-    // let bodyData = request.body;
-    // return data = {
-    //     'title': bodyData.name,
-    //     'description': bodyData.description,
-    //     'category': bodyData.catagory,
-    //     'duration': {
-    //         'value': bodyData.durationValue,
-    //         'unit': bodyData.durationUnit
-    //     },
-    //     'createdBy': bodyData.userName,
-    //     'preferredDate': bodyData.preferredDate,
-    //     'preferedTime': bodyData.preferedTime,
-    //     'hourlyFee': bodyData.hourlyFee,
-    //     'createdOn': Date.new(),
-    //     'status': "new",
-    //     'waitingList': [],
-    //     'grantedTo': [],
-    //     'comments': []
-    // }
-
-        console.log("The function");
-    let data = {
-        'title': "My first job",
-        'description': "hdjhjdjkkjjkhjhnjkadjfakdjlhkaddj",
-        'category': " labtop fix",
-        'duration': {
-            'value': 5,
-            'unit': "Month"
-        },
-        'createdBy': "Brhane",
-        'preferedTime': 'Date.new()',
-        'hourlyFee': 5,
-        'createdOn': Date.new(),
-        'status': "new",
-        'waitingList': [],
-        'grantedTo': [],
-        'comments': []
-    }
-    return data;
-}
-
 module.exports = router;
-

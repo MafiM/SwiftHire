@@ -2,31 +2,47 @@ import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http'
 import 'rxjs/Rx';
 
+import { HomeService  } from '../services/home.service';
+
 @Injectable()
 export class PostServiceService {
-  private postUrl = 'http://localhost:4000/api/posts/'
-  
-  constructor(private http: Http) { }
+  private postUrl = 'http://localhost:4000/api/posts/';
+  private activityJobUrl = "currentjob/";
+  private activityPostUrl = "currentpost/";
+  private
+
+
+  constructor(private http: Http, private homeService: HomeService) { }
   
   //return all posts
-  retrieveAllPosts(){
+  retrieveAllPosts(){ 
     return this.http.get(this.postUrl).map(res =>res.json())
   }
 
-  getUserJobApplications(username) {
-    if (!username) 
+  getUserJobApplications() {
+    if (!this.homeService.getUserName()) 
       throw new Error("No username provided");
     else 
-      return this.http.get(`${this.postUrl}'myjobapp/${username}`)
+      return this.http.get(`${this.postUrl}'myjobapp/${this.homeService.getUserName()}`)
   }
 
-  //My own job post
-  getAllUserPosts(username) {
-    return this.http.get('http://localhost:4000/api/posts/' + username);
+  //user post Activities
+  getUserPostsActivities(username) {
+    if (username == null) {
+     throw new Error("no name");
+    }
+    return this.http.get(this.postUrl + this.activityJobUrl + username).map((res: Response) => res.json());
   }
 
-  //My own activities
-  getUserActivities(username) {
-    return this.http.get('http://localhost:4000/api/posts/activities/' + username);
+  //user job Activities activities
+  getUserJobActivities(username) {
+    if (username == null) {
+      throw new Error("no name");
+    }
+    return this.http.get(this.postUrl + this.activityPostUrl + username).map((res: Response) => res.json());
+  }
+  //add new post 
+  addNewPost(body){
+    return this.http.post(this.postUrl + 'add',body).map((res:Response) =>res.json());
   }
 }
