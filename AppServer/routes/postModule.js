@@ -56,7 +56,7 @@ router.post('/currentjob', (req, res) => {
 })
 //return all current posts for the user (activities)
 router.post('/currentpost', (req, res) => {
-    const uname = req.params.name; 
+    const uname = req.body; 
     Post.get({$and: [{'createdBy': uname},{'status':status.GRANTED}]})
         .then(p => {res.json(p)})
         .catch(err=>res.json(err))

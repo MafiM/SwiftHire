@@ -12,9 +12,8 @@ export class ActivityComponent implements OnInit {
   private userPostActivity;
 
   constructor(private service: PostServiceService) {
-
   }
-
+  
   ngOnInit() {
     this.getAllJobActivities();
     this.getAllPostActivities();

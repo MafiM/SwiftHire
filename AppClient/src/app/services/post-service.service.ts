@@ -29,7 +29,7 @@ export class PostServiceService {
     if (username == null) {
      throw new Error("no name");
     }
-    return this.http.get(this.postUrl + this.activityJobUrl + username).map((res: Response) => res.json());
+    return this.http.post(this.postUrl + this.activityPostUrl,username).map((res: Response) => res.json());
   }
 
   //user job Activities activities
@@ -37,7 +37,7 @@ export class PostServiceService {
     if (username == null) {
       throw new Error("no name");
     }
-    return this.http.get(this.postUrl + this.activityPostUrl + username).map((res: Response) => res.json());
+    return this.http.post(this.postUrl + this.activityJobUrl,username).map((res: Response) => res.json());
   }
   //add new post 
   addNewPost(body){
