@@ -1,1 +1,13 @@
-<router-outlet></router-outlet>
+
+	<section class="hero" *ngIf="!auth.isAuthenticated()">
+		<div class="background-image" style="background-image: url(../../assets/images/balloon.jpg);"></div>
+		<h1>Swift hire </h1>
+		<h3>Find job quickly </h3>
+		<a  (click)="auth.login()" class="btn">Login Now</a>
+    </section>
+
+    <router-outlet>
+    </router-outlet>
+	
+
+

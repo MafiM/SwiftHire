@@ -14,6 +14,12 @@ let postSchema = new mongoose.Schema({
     preferredDate: Date,
     preferredTime: Date,
     status: String,
+    address     :   {
+                        street  :   String,
+                        city    :   String,     
+                        State   :   String,
+                        zipcode :   Number
+                    },
     waitingList: [
         {
             userName: String,
@@ -42,7 +48,7 @@ let postSchema = new mongoose.Schema({
     ]
 })
 
-postSchema.statics.get = function (post) { console.log("you passed "+post)
+postSchema.statics.get = function (post) { 
     return new Promise((res, rej) => {
         if (post === null) {
             rej({ 'message': 'post is null', 'status': false })

@@ -4,17 +4,20 @@ import { RouterModule, Routes } from '@angular/router'
 import { HttpModule } from '@angular/http'
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import {AuthService  } from './services/auth/auth.service';
+
 
 //components
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { ActivityComponent } from './activity/activity.component';
-import { MyJobComponent } from './my-job/my-job.component';
-import { MyPostComponent } from './my-post/my-post.component';
-import { NotificationComponent } from './notification/notification.component';
-import { NewPostComponent } from './new-post/new-post.component';
-import { MainComponent } from './main/main.component';
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
+import { ActivityComponent } from './components/activity/activity.component';
+import { MyJobComponent } from './components/my-job/my-job.component';
+import { MyPostComponent } from './components/my-post/my-post.component';
+import { NotificationComponent } from './components/notification/notification.component';
+import { NewPostComponent } from './components/new-post/new-post.component';
+import { MainComponent } from './components/main/main.component';
+import { LoginGuard } from "./services/login.guard";
 
 //services
 import { PostServiceService } from './services/post-service.service';
@@ -31,7 +34,7 @@ const APP_ROUTES = [
       { path: 'myPost', component: MyPostComponent  },
       { path: 'notification', component: NotificationComponent  },
       { path: 'newPost', component: NewPostComponent  }
-    ]
+    ],CanActivate:[LoginGuard]
   },
 ]
 
@@ -55,7 +58,7 @@ const APP_ROUTES = [
     ReactiveFormsModule
   ],
   providers: [
-    PostServiceService
+    PostServiceService,AuthService,LoginGuard
   ],
   bootstrap: [AppComponent]
 })

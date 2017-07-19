@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http'
-import 'rxjs/add/operator/map';
+import 'rxjs/Rx';
 
 @Injectable()
 export class PostServiceService {
@@ -11,10 +11,17 @@ export class PostServiceService {
 
 
   constructor(private http: Http) { }
+  
+  //return all posts
+  retrieveAllPosts(){
+    return this.http.get(this.postUrl).map(res =>res.json())
+  }
 
-  //get all posts
-  retrieveAllPosts() {
-    return this.http.get(this.postUrl).map((res: Response) => res.json())
+  getUserJobApplications(username) {
+    if (!username) 
+      throw new Error("No username provided");
+    else 
+      return this.http.get(`${this.postUrl}'myjobapp/${username}`)
   }
 
   //user post Activities

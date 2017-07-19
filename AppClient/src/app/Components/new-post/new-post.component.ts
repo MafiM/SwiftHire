@@ -7,7 +7,7 @@ import {
   FormArray
 } from "@angular/forms";
 import { Observable } from "rxjs/Rx";
-import { PostServiceService } from '../services/post-service.service';
+import { PostServiceService } from '../../services/post-service.service';
 
 @Component({
   selector: 'app-new-post',

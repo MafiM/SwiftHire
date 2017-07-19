@@ -18,11 +18,11 @@ const status = {
 //get all posts
 router.get('/', function (req, res, next) {
     Post.get()
-        .then(data => {
-            //res.json(JSON.stringify(data))
-            res.json(data)
+        .then(data => { res.json(data)
         })
         .catch(err => res.json(err));
+
+        
 });//checked
 
 //return all current jobs for the user (activities)
@@ -48,6 +48,28 @@ router.get('/mypost/:name', function (request, response) {
         .catch(err => res.json(err))
 })
 
+router.post('/currentjob', (req, res) => {
+    const uname = req.body; 
+    Post.get({$and: [{'grantedTo': uname},{'status':status.GRANTED}]})
+        .then(p => {res.json(p)})
+        .catch(err=>res.json(err))
+})
+//return all current posts for the user (activities)
+router.post('/currentpost', (req, res) => {
+    const uname = req.params.name; 
+    Post.get({$and: [{'createdBy': uname},{'status':status.GRANTED}]})
+        .then(p => {res.json(p)})
+        .catch(err=>res.json(err))
+})
+
+//my own job posts( created jobs by the user)
+router.post('/mypost', function (request, response) {
+    const uname = req.body; 
+    Post.get({'createdBy': uname})
+        .then(p => {res.json(p)})
+        .catch(err=>res.json(err))
+})
+
 //get users job applications ( MY job applications)
 router.get('/myjobapp/:name', function (req, res, next) {
     const uname = req.params.name;
@@ -62,7 +84,7 @@ router.post('/add', urlparser, (req, res) => {
     console.log(req.body)
     newPost.add().then(() => {
         res.json({ 'status': 'true' });
-    }).catch(err => res.send(err));
+    })
 })
 
 //get a single post
@@ -150,48 +172,5 @@ router.post('/add', urlparser, (req, res) => {
 //         .catch(err => res.send(err));
 
 // })
-
-//add new post to the database function
-function addNewPost(request) {
-    // let bodyData = request.body;
-    // return data = {
-    //     'title': bodyData.name,
-    //     'description': bodyData.description,
-    //     'category': bodyData.catagory,
-    //     'duration': {
-    //         'value': bodyData.durationValue,
-    //         'unit': bodyData.durationUnit
-    //     },
-    //     'createdBy': bodyData.userName,
-    //     'preferredDate': bodyData.preferredDate,
-    //     'preferedTime': bodyData.preferedTime,
-    //     'hourlyFee': bodyData.hourlyFee,
-    //     'createdOn': Date.new(),
-    //     'status': "new",
-    //     'waitingList': [],
-    //     'grantedTo': [],
-    //     'comments': []
-    // }
-
-    console.log("The function");
-    let data = {
-        'title': "My first job",
-        'description': "hdjhjdjkkjjkhjhnjkadjfakdjlhkaddj",
-        'category': " labtop fix",
-        'duration': {
-            'value': 5,
-            'unit': "Month"
-        },
-        'createdBy': "Brhane",
-        'preferedTime': 'Date.new()',
-        'hourlyFee': 5,
-        'createdOn': Date.new(),
-        'status': "new",
-        'waitingList': [],
-        'grantedTo': [],
-        'comments': []
-    }
-    return data;
-}
 
 module.exports = router;
