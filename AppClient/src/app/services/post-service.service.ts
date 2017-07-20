@@ -71,7 +71,7 @@ export class PostServiceService {
   }
   applyPost(pid, body) {
     let obj = {
-      'id' : pid,
+      id : pid,
       'userName' : this.homeService.getUserName(),
       'applicationDetail' : body
     }

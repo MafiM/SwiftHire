@@ -16,8 +16,8 @@
       <div *ngFor="let post of posts">  
         <h3><a (click)="viewPost(post._id)">{{post.title}}</a></h3>
           <p><span *ngIf="post.category">{{post.category}} </span>
-          <span *ngIf="post.address"> {{post.address.city}} - {{post.hourlyFee}} </span> 
-          <span *ngIf="post.duration"> - {{post.duration}} </span></p>
+          <span *ngIf="post.address"> <span *ngIf="post.address.city">{{post.address.city}}</span> - <span *ngIf="post.address.hourlyFee">{{post.hourlyFee}}</span> </span> 
+          <!--<span *ngIf="post.duration"> - {{post.duration}} </span></p>-->
           <p><span *ngIf="post.createdOn">Posted On:{{post.createdOn}} </span>
           <p>
             {{post.description}}
@@ -29,16 +29,16 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-5 panel currentPost">
+  <div class="col-sm-3 panel currentPost">
     <div *ngIf="currentPost">
       <h4>{{currentPost.title}}</h4>
       <p><i>Posted by: </i>{{currentPost.createdBy}}</p>
-      <p><i>Posted on: </i>{{currentPost.createdOn}}</p>
+      <p><i>Posted on: </i>{{currentPost.createdOn | date}}</p>
       <p><i>Category: </i>{{currentPost.category}}</p>
       <p><i>Duration: </i><span *ngIf="currentPost.duration">{{currentPost.duration.value}} {{currentPost.duration.unit}}</span></p>
       <p><i>Hourly Fee: </i>{{currentPost.hourlyFee}}</p>
       <p><i>Preferred Date: </i>{{currentPost.preferredDate}}, {{currentPost.preferredTime}}</p>
-      <div class="panel">
+      <div>
         <p>{{currentPost.description}}</p>
       </div>
       <p><i>Address: </i><span *ngIf="currentPost.address">{{currentPost.address.city}}, {{currentPost.address.state}}, {{currentPost.address.zipcode}}</span></p>

@@ -52,17 +52,12 @@ let postSchema = new mongoose.Schema({
     ]
 })
 
-postSchema.statics.get = function (post) {
-    console.log(post)
+postSchema.statics.get = function (post) {console.log(post)
     return new Promise((res, rej) => {
         if (post === null) {
             rej({ 'message': 'post is null', 'status': false })
         } else {
-            // Post.find(post, function (err, data) {
-            //     if (err) rej({ 'message': err, 'status': false })
-            //     res(JSON.stringify(data))
-            // })
-            Post.find(post).sort({'createdOn':-1}).limit(3, function (err, data) {
+            Post.find(post).sort({'createdOn':'descending'}).limit(10).exec(function (err, data) {
                 if (err) rej({ 'message': err, 'status': false })
                 res(JSON.stringify(data))
             })

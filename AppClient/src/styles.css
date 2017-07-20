@@ -18,3 +18,14 @@ body {
 a.active {
     color: #fff
 }
+.currentPost{
+    position: fixed;
+    right: 60px;
+    background-color: rgb(76, 59, 86);
+    color: #fff;
+    border: 0;
+    min-height: 0
+}
+.currentPost>div{
+    padding: 10px
+}

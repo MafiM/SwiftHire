@@ -39,13 +39,6 @@ router.post('/filter', function (req, res) {
         .catch(err => res.json(err));
 });
 
-//get a single post
-router.post('/getPost', function (req, res) { 
-    Post.get({ "_id": obj(req.body.id) })
-        .then(data => res.json(data))
-        .catch(err => res.json(err));
-})
-
 router.post('/currentjob', (request, response) => {
    const uname = request.body.userName;
     Post.get({ $and: [{ 'grantedTo.userName': uname }, { 'status': status.GRANTED }] })
@@ -84,7 +77,14 @@ router.post('/add', urlparser, (req, res) => {
     }).catch(err => res.json(err))
 })
 
-router.post('/apply', urlparser, (req, res) => {
+//get a single post
+router.post('/getPost', function (req, res) { 
+    Post.get({ "_id": obj(req.body.id) })
+        .then(data => res.json(data))
+        .catch(err => res.json(err));
+})
+
+router.post('/apply', (req, res) => {
     Post.get({ "_id": obj(req.body.id) }).then(post => {
         const userName = req.body.userName
         const applicationDetail = req.body.body
