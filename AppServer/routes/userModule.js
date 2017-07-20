@@ -37,7 +37,6 @@ var userDataList = [{
     postApplication: ["id1", "id2"]
 }]
 
-
 //get all user
 router.get('/', function (req, res, next) {
     User.get()
@@ -48,53 +47,63 @@ router.get('/', function (req, res, next) {
 });
 
 //return currently logged in user
-router.post('/loggedin', (req, res) => {
-    const email = req.params.email;
-    User.get(email)
-        .then(p => { res.json(p) })
-        .catch(err => res.json(err))
+router.get('/:email', (req, res) => {
+   
+   console.log("To get data email : " + req.params.email);
+    User.get(req.params.email)
+        .then(data => {
+            console.log("data length is "+data.length);
+            if (data.length) { // if array is not empty
+                console.log(JSON.parse(data));
+                res.json({ isCorrectEmail: true, userData: data });
+            }
+            else {
+                console.log("user with email not found " + JSON.parse(data));
+                  res.json({ isCorrectEmail: false, userData: [] });
+
+            }
+        })
+        .catch(err => {
+            res.json({ isCorrectEmail: false, userData: [] });
+        });
 })
-    
+
 //Add new user 
 router.post('/add', urlparser, (req, res) => {
     const newUser = new User(req.body);
-    console.log("in database pushed user :"+newUser);
+    console.log("User being pushed in Database :" + newUser);
 
-    //console.log(req.body)
     newUser.add().then(() => {
-        res.json({ 'status': 'true' });
+        res.json({ status: 'true',userData:newUser });
     })
 })
 //update new user 
 router.post('/update', urlparser, (req, res) => {
     const newUser = new User(req.body);
-    console.log("The pushed user for update is :"+newUser);
+    console.log("The pushed user for update is :" + newUser);
     newUser.update().then(() => {
         res.json({ 'status': 'true' });
     })
 })
 //validate user email
-router.post('/validate',(req, res)=> {   
-    
-    console.log("To validate email : "+req.body.email); 
-    // User.get(req.body.email)
-    // .then(data=>{ console.log("user fetched"+data), res.json({'isCorrectEmail': false, 'user':data})})
-    // .catch((err)=>{ console.log("Problem on user data fetch"); res.json({'isCorrectEmail': false,'user':null})})
+router.get('/validate/:email', (req, res) => {
 
-    
+    console.log("To validate email : " + req.params.email);
+    User.findUser(req.params.email)
+        .then(data => {
+            console.log("data length is "+data.length);
+            if (data.length) { // if array is not empty
+                console.log(JSON.parse(data));
+                res.json({ isCorrectEmail: true, userData: data });
+            }
+            else {
+                console.log("user with email not found " + JSON.parse(data));
+                  res.json({ isCorrectEmail: false, userData: [] });
 
-      User.get(req.body.email)
-        .then(data => { 
-            if(data!=null || data!=[])
-                {console.log(" user with email found "+data);res.json({ isCorrectEmail: true });}
-            else
-                {
-                    console.log("user with email not found "+data);res.json({ isCorrectEmail: false });
-
-                }   
+            }
         })
         .catch(err => {
-            res.json({ isCorrectEmail: false });
+            res.json({ isCorrectEmail: false, userData: [] });
         });
 });
 

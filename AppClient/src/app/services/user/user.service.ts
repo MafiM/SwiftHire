@@ -9,27 +9,28 @@ export class UserService {
 
   //Validate Logged in user
   validateUser(userEmail) {
-    console.log("email serach on service :" +   userEmail );
-    return this.http.post(this.userURI + "validate", { email: userEmail })
+    console.log("email search on service :" +   userEmail );
+    return this.http.get(`${this.userURI}validate/${userEmail}`)
       .map((res: Response) => res.json());
   }
 
   // retrive currently loggedIn user
   retirveLoggedInUser(userEmail)
   {
-    return this.http.get(this.userURI + userEmail);
+    return this.http.get(`${this.userURI}${userEmail}`)
+      .map((res: Response) => res.json());
   }
 
 
   //retrive all users
   retirveAllUsers() {
-    return this.http.get(this.userURI);
+    return this.http.get(this.userURI).map(res=>res.json());
   }
 
   //add new user 
-  addNewUser(body) {
-    console.log("Add request sent :" + body)
-    return this.http.post(this.userURI + 'add', body).map((res: Response) => res.json());
+  addNewUser(userData) {
+    console.log("Add request sent :" + userData)
+    return this.http.post(this.userURI + 'add', userData).map((res: Response) => res.json());
   }
 
   updateUSer(user) {

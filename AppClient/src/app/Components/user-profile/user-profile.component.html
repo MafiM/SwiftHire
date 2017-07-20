@@ -1,44 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+</head>
+<body>
 <div class="container">
-  <div>
-    <ul class="breadcrumb">
-      <li><a [routerLink]="['main']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a></li>
-      <li><a [routerLink]="['activities']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Activities</a></li>
-      <li><a [routerLink]="['myJob']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">My Job Application</a></li>
-      <li><a [routerLink]="['myPost']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">My Post</a></li>
-      <li><a [routerLink]="['notification']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Notification</a></li>
-      <li><a [routerLink]="['newPost']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Add New Post</a></li>
-      <li><a *ngIf="auth.isAuthenticated()" (click)="auth.logout()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Logout</a></li>
-    </ul>
-  </div>
-  <div class="row">
-    <div class="panel panel-default col-sm-2" style="overflow:hidden">
-      <div class="panel-body">
-        <img src='{{loggedInUser?.picture}}' style="height: 100px;width: 100px" />
-        <label>{{loggedInUser?.nickname}}</label>
-        <label>{{loggedInUser?.name}}</label>
-      </div>
-   <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Profile</button>
-    </div>
 
-  </div>
-  <div class="col-sm-10">
-    <router-outlet></router-outlet>
-  </div>
-
-</div>
-
-
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">{{loggedInUser?.nickname}}</h4>
-      </div>
-      <div class="modal-body">
-       <form [formGroup]="myForm" (ngSubmit)="onsubmit()">
+  <div class="col-xs-6 col-xs-offset-3 jumbotron">
+    <div class="row">
+      <form [formGroup]="myForm" (ngSubmit)="onsubmit()">
         <div class="form-group">
           <label for="username" >Name:</label>
           <input  type="text" class="form-control" id="username" [formControl]="myForm.controls['userName']"  [(ngModel)]="user.userName">
@@ -98,9 +74,11 @@
         <button type="submit" class="btn btn-primary" [disabled]="!myForm.valid"> Submit</button>
         <!-- <button class="btn " (click)="consoleLoadedData()">GetData</button> -->
       </form>
-      </div>
-      
     </div>
-
   </div>
 </div>
+</body>
+</html>
+
+
+

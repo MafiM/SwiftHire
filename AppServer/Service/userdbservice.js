@@ -18,17 +18,42 @@ let userSchema = new mongoose.Schema({
     postApplication: [String]
 })
 
+
+
+userSchema.statics.findUser = function (useremail) {
+    console.log("searching on database:" + useremail);
+    return new Promise((res, rej) => {
+        if (useremail == null) rej("User email is null");
+
+        //Mongoose find() didnt supported searching using email because its value have special characters like @ and .
+        // so we are storing and searching email in special format removing @ and . to _
+        let email = useremail | "";
+        email = email.split('@').join('_').split('.').join('_');
+
+        //console.log(" transformed email is "+email);
+
+        User.find({ 'email': email }, function (err, data) {
+            console.log("data length udbser" + data.length);
+            if (err || !data.length) rej(err)
+            res(JSON.stringify(data))
+        })
+
+    })
+}
+
 userSchema.statics.get = function (email = null) {
+
+    console.log("searching on database:" + email);
     return new Promise((res, rej) => {
         if (email === null) {
             User.find({}, function (err, data) {
                 if (err) rej(err)
                 res(JSON.stringify(data))
             })
-        }
-        else {
-            console.log("scanning the database for "+email);
-            User.find({ 'userName': email }, function (err, data) {
+        } else {
+            console.log("searching on database:" + email);
+            email = email.split('@').join('_').split('.').join('_');
+            User.find({ 'email': email }, function (err, data) {
                 if (err) rej(err)
                 res(JSON.stringify(data))
             })
@@ -36,16 +61,19 @@ userSchema.statics.get = function (email = null) {
     })
 }
 
-userSchema.statics.find=function(email=null)
-{
-    User.find({ 'userName': email }, function (err, data) {
-        if (err) rej(err)
-        res(JSON.stringify(data));
-    })
-}
 userSchema.methods.add = function () {
     return new Promise((res, rej) => {
-        this.save(function (err) {
+        //Mongoose find() didnt supported searching using email because its value have special characters like @ and .
+        // so we are storing  email in special format removing @ and . to _        
+        let eml = this.email || "";
+        console.log("value of eml" + eml);
+        eml = eml.split('@').join('_').split('.').join('_');
+        newUser = this;
+
+        newUser.email = eml;
+
+
+        newUser.save(function (err) {
             if (err) {
                 rej({ 'message': err, 'status': false })
             }
@@ -57,7 +85,14 @@ userSchema.methods.add = function () {
     })
 }
 userSchema.methods.update = function () {
-    User.find({ email: this.email }, function (err, user) {
+
+    let eml = this.email || "";
+    console.log("value of eml" + eml);
+    newUser = this;
+    newUser.email = eml.split('@').join('_').split('.').join('_');
+
+
+    newUser.find({ email: this.email }, function (err, user) {
         if (err) throw err
         console.log(user)
         user = this

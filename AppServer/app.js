@@ -12,6 +12,22 @@ var posts = require('./routes/postModule');
 var users = require('./routes/userModule');
 var app = express();
 
+// /****************************************
+//  *handling database connection
+//  ****************************************/
+// var mongo = require('mongoskin');
+// var db = mongo.db("mongodb://admin1:admin1@ds161262.mlab.com:61262/swifthire", {native_parser: true});
+// db.bind('users');
+
+// /*********************************************************
+//  * assigning db_obj for later use on any request object
+//  **********************************************************/
+// app.use(function (req,res,next) {
+//     req.db_users=db;
+//     next();
+
+// })
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

@@ -23,6 +23,9 @@ import { PostServiceService } from './services/post-service.service';
 import { UserService } from './services/user/user.service';
 
 import { HomeService  } from './services/home.service';
+import { UserProfileComponent } from './Components/user-profile/user-profile.component';
+
+
 
 const APP_ROUTES = [
   {path: 'login', component: LoginComponent},
@@ -35,7 +38,9 @@ const APP_ROUTES = [
       { path: 'myJob', component: MyJobComponent  },
       { path: 'myPost', component: MyPostComponent  },
       { path: 'notification', component: NotificationComponent  },
-      { path: 'newPost', component: NewPostComponent  }
+      { path: 'newPost', component: NewPostComponent  },      
+      { path: 'profile', component: UserProfileComponent,CanActivate:[LoginGuard]  },
+      
     ],CanActivate:[LoginGuard]
   },
 ]
@@ -50,14 +55,15 @@ const APP_ROUTES = [
     MyPostComponent,
     NotificationComponent,
     NewPostComponent,
-    MainComponent
+    MainComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(APP_ROUTES),
     HttpModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     PostServiceService,AuthService,LoginGuard,UserService,HomeService
