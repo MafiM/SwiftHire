@@ -1,17 +1,45 @@
-<div>
-  <div *ngIf="userPosts">
-    <div *ngFor="let post of userPosts">
-      <h3>{{post.title}}</h3>
-      <p><span *ngIf="post.category">{{post.category}} </span>
-        <span *ngIf="post.address"> {{post.address.city}} - {{post.address.state}} </span>
-        <span *ngIf="post.duration"> - {{post.duration}} </span></p>
-      <p>
-        {{post.description}}
-      </p>
-      <a>...more</a>
-      <p>Submitted applications (<span *ngIf="post.waitingList">{{post.waitingList.length}}</span>)</p>
-      <p>Client: {{post.createdBy}} <span>***</span>
+<div class="row">
+  <div class="col-sm-7">
+    <div *ngIf="userPosts else noPost">
+      <h3> My own posts</h3>
+      <div *ngFor="let post of userPosts">
+        <h3><a (click)="viewPost(post._id)">{{post.title}}</a></h3>
+        <p><span *ngIf="post.category">{{post.category}} </span>
+          <span *ngIf="post.address"> {{post.address.city}} - {{post.address.state}} </span>
+          <span *ngIf="post.duration"> - {{post.duration}} </span></p>
+        <p>
+          {{post.description}}
+        </p>
+        <p>Submitted applications (<span *ngIf="post.waitingList">{{post.waitingList.length}}</span>)</p>
+        <p>Client: {{post.createdBy}} <span>***</span></p>
         <hr>
+      </div>
     </div>
   </div>
-</div> 
+
+  <div class="col-sm-5 panel">
+    <div *ngIf="currentPost">
+      <h4>{{currentPost.title}}</h4>
+      <p><i>Posted by: </i>{{currentPost.createdBy}}</p>
+      <p><i>Posted on: </i>{{currentPost.createdOn}}</p>
+      <p><i>Category: </i>{{currentPost.category}}</p>
+      <p><i>Duration: </i><span *ngIf="currentPost.duration">{{currentPost.duration.value}} {{currentPost.duration.unit}}</span></p>
+      <p><i>Hourly Fee: </i>{{currentPost.hourlyFee}}</p>
+      <p><i>Preferred Date: </i>{{currentPost.preferredDate}}, {{currentPost.preferredTime}}</p>
+      <div class="panel">
+        <p>{{currentPost.description}}</p>
+      </div>
+      <p><i>Address: </i><span *ngIf="currentPost.address">{{currentPost.address.city}}, {{currentPost.address.state}}, {{currentPost.address.zipcode}}</span></p>
+      <p><i>Total Applicants: </i><span *ngIf="currentPost.waitingList">{{currentPost.waitingList.length}}</span></p>
+      <div *ngFor="let p of currentPost.comments.length">
+          <p> commented by :{{p.comments.commentBy}}</p>
+          <p> commented by :{{p.comments.text}}</p>
+          <p> commented by :{{p.comments.timeStamp}}</p>
+        </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noPost>
+  <p><i>You have 0 Activities</i></p>
+</ng-template>

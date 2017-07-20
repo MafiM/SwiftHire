@@ -69,7 +69,6 @@ export class ActivityComponent implements OnInit {
     });
 
   }
-  
 
   commentBody() {
     let commentData = this.myForm;

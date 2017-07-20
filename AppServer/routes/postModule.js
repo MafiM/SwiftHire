@@ -94,19 +94,6 @@ router.post('/apply', (req, res) => {
         }).catch(err => res.json(err))
     }).catch(err => res.json(err))    
 })
-/*
- waitingList: [
-        {
-            userName: String,
-            applicationDetails: {
-                fullName: String,
-                aboue: String,
-                exp:String,
-                createdOn: Date
-            },
-            notification: String
-        }
-    ],
 
 router.post('/addcomment', urlparser, (req, res) => {
     const newPost = new Post(req.body)
@@ -123,6 +110,20 @@ router.post('/status', urlparser, (req, res) => {
         res.json({ 'status': 'true' });
     }).catch(err => res.json(err))
 })
+/*
+ waitingList: [
+        {
+            userName: String,
+            applicationDetails: {
+                fullName: String,
+                aboue: String,
+                exp:String,
+                createdOn: Date
+            },
+            notification: String
+        }
+    ],
+
 
 //get a single post
 // router.get('/:id', function (request, response) {

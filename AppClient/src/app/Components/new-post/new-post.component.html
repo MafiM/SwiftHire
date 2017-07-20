@@ -41,7 +41,7 @@
   <div class="control-group">
     <label class="control-label">duration unit</label>
     <div class="controls">
-      <input id="duration-unit" name="durationUnit" [formControl]="myForm.controls['durationUnit']" type="number" placeholder="duration unit"
+      <input id="duration-unit" name="durationUnit" [formControl]="myForm.controls['durationUnit']" type="text" placeholder="duration unit"
         class="input-xlarge">
     </div>
     <div class="errors" *ngIf="!myForm.controls['durationUnit'].valid">Required</div>

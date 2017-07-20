@@ -10,6 +10,7 @@ import { PostServiceService } from '../../services/post-service.service';
 export class MyPostComponent implements OnInit {
 
   private userPosts: any;
+    currentPost: {}
   constructor(private postService: PostServiceService) { }
 
   ngOnInit() {
@@ -22,5 +23,12 @@ export class MyPostComponent implements OnInit {
     }, err => {
       throw err;
     });
+  }
+  viewPost(val){
+    this.postService.getPost(val)
+        .subscribe(
+          data  => { this.currentPost = JSON.parse(data)[0] },
+          (err)   =>  console.log(err)  
+        )
   }
 }
