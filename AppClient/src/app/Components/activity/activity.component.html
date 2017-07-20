@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
   <div class="col-sm-7">
     <div class="panel">
       <h3> Job Activities </h3>
@@ -19,33 +19,52 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <ng-template #noJob>
+<!-- <ng-template #noJob>
       <p><i>You have 0 Activities</i></p>
-    </ng-template>
+    </ng-template> -->
 
-    <div class="panel">
-      <h3> Job Activities </h3>
-      <div *ngIf="userPostActivity; else noPost">
-        <div *ngFor="let post of userPostActivity">
-          <div class="clearfix">
-            <h3><a (click)="viewPost(post._id)">{{post.title}}</a></h3>
-          </div>
-          <div>
-            <p>category: <span *ngIf="post.category">{{post.category}} </span> </p>
-            <p>Address<span *ngIf="post.address"> {{post.address.city}} , {{post.address.state}} </span></p>
-            <p>Duration<span *ngIf="post.duration"> - {{post.duration.value}} {{post.duration.unit}}</span></p>
-            <p>Hourly Fee :<span *ngIf="post.hourlyFee"> - {{post.hourlyFee}} </span></p>
-            <p>Total Fee :<span *ngIf="post.duration"> - {{post.hourlyFee* 10}} </span></p>
-            <p>Granted User(<span *ngIf="post.waitingList">{{post.waitingList.length}}</span>)</p>
-            <p>comment(<span *ngIf="post.waitingList">{{post.comments}}</span>)</p>
-            <a class="btn btn-primary" (click)="finish(post._id)">Finsh</a>
-          </div>
-        </div>
+
+<div class="row">
+  <div class="col-sm-7">
+    <div *ngIf="userPostActivity else noPost">
+      <h4> My Post current Activities</h4>
+      <div *ngFor="let post of userPostActivity">
+        <h3><a (click)="viewPost(post._id)">{{post.title}}</a></h3>
+        <p><span *ngIf="post.category">{{post.category}} </span>
+          <span *ngIf="post.address"> {{post.address.city}} - {{post.address.state}} </span>
+          <span *ngIf="post.duration"> - {{post.duration}} </span></p>
+        <p>
+          {{post.description}}
+        </p>
+        <a (click)="viewPost(post._id)">...more</a>
+        <p>Submitted applications (<span *ngIf="post.waitingList">{{post.waitingList.length}}</span>)</p>
+        <p>Client: {{post.createdBy}} <span>***</span>
+          <p><a class="btn btn-primary" (click)="finish(post._id)">Finsh</a></p>
+          <hr>
       </div>
     </div>
   </div>
+
+  <div class="col-sm-5 panel">
+    <div *ngIf="currentPost">
+      <h4>{{currentPost.title}}</h4>
+      <p><i>Posted by: </i>{{currentPost.createdBy}}</p>
+      <p><i>Posted on: </i>{{currentPost.createdOn}}</p>
+      <p><i>Category: </i>{{currentPost.category}}</p>
+      <p><i>Duration: </i><span *ngIf="currentPost.duration">{{currentPost.duration.value}} {{currentPost.duration.unit}}</span></p>
+      <p><i>Hourly Fee: </i>{{currentPost.hourlyFee}}</p>
+      <p><i>Preferred Date: </i>{{currentPost.preferredDate}}, {{currentPost.preferredTime}}</p>
+      <div class="panel">
+        <p>{{currentPost.description}}</p>
+      </div>
+      <p><i>Address: </i><span *ngIf="currentPost.address">{{currentPost.address.city}}, {{currentPost.address.state}}, {{currentPost.address.zipcode}}</span></p>
+      <p><i>Total Applicants: </i><span *ngIf="currentPost.waitingList">{{currentPost.waitingList.length}}</span></p>
+    </div>
+  </div>
+</div>
+
   <div class="col-sm-5" *ngIf="pid">
     <form [formGroup]="myForm" (ngSubmit)="addComment()">
       <div class="control-group">
@@ -64,7 +83,6 @@
       </div>
     </form>
   </div>
-  <!--pid  -->
   <ng-template #noPost>
     <p><i>You have 0 Activities</i></p>
   </ng-template>

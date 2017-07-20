@@ -72,7 +72,7 @@ export class NewPostComponent implements OnInit {
       'hourlyFee': addData.hourlyFee,
       'preferredDate': addData.preferedDate,
       'preferredTime': addData.preferedTime,
-      'status': this.status.NEW,
+      'status': this.status.GRANTED,
       'address': {
         'street': addData.street,
         'city': addData.city,
