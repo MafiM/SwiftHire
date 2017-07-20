@@ -58,7 +58,7 @@ export class PostServiceService {
 
   //add comment
   addComment(body){
-    return this.http.post(this.postUrl + 'add', body).map((res: Response) => res.json());
+    return this.http.post(this.postUrl + 'addComment', body).map((res: Response) => res.json());
   }
 
   //add new post 
@@ -78,4 +78,10 @@ export class PostServiceService {
     return this.http.post(this.postUrl + 'apply',obj)
           .map(res=> res.json() )
   }
+
+
+  changeStatus(id){
+    return this.http.post(this.postUrl + 'status', {'id':id})
+          .map(res=> res.json() )
+  }     
 }

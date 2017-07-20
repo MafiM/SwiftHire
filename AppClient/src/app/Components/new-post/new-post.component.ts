@@ -53,39 +53,37 @@ export class NewPostComponent implements OnInit {
   }
 
   registerNewPost() {
-
-    let postData = this.userPostData()
-    // this.service.addNewPost(postData).subscribe(data => {
-    //   this.message = data;
-    //   console.log(this.message)
-    // }, err => {
-    //   throw err;
-    // });
+    let postData = this.userPostData();
+    console.log(postData)
+    this.service.addNewPost(postData).subscribe(data => {
+      this.message = data;
+      console.log(this.message)
+    }, err => {
+      throw err;
+    });
   }
 
   userPostData() {
     let addData = this.myForm.value;
-    console.log('location: '+addData.location)
-    return {
-        'title': addData.title,
-        'description': addData.description,
-        'category': addData.category,
-        'location': ["String", "String"],
-        'duration': { value: addData.durationValue, unit: addData.durationUnit },
-        'hourlyFee': addData.hourlyFee,
-        'preferredDate': addData.preferedDate,
-        'preferredTime': addData.preferedTime,
-        'status': this.status.NEW,
-        'address': {
-          'street': addData.street,
-          'city': addData.city,
-          'State': addData.region,
-          'zipcode': addData.zipCode
-        },
-        'createdOn': Date.now(),
-        'createdBy': this.homeService.getUserName(),
-      }
-
-   
+  
+   return {
+      'title': addData.title,
+      'description': addData.description,
+      'category': addData.category,
+      'location': ["String", "String"],
+      'duration': { value: addData.durationValue, unit: addData.durationUnit },
+      'hourlyFee': addData.hourlyFee,
+      'preferredDate': addData.preferedDate,
+      'preferredTime': addData.preferedTime,
+      'status': this.status.GRANTED,
+      'address': {
+        'street': addData.street,
+        'city': addData.city,
+        'State': addData.region,
+        'zipcode': addData.zipCode
+      },
+      'createdOn': Date.now(),
+      'createdBy': this.homeService.getUserName(),
+    }
   }
 }

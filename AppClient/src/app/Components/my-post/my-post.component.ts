@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PostServiceService } from '../../services/post-service.service';
-import { LocationService } from '../../services/location.service';
 
 
 @Component({
@@ -11,7 +10,6 @@ import { LocationService } from '../../services/location.service';
 export class MyPostComponent implements OnInit {
 
   private userPosts: any;
-  private location :{}
   constructor(private postService: PostServiceService) { }
 
   ngOnInit() {
