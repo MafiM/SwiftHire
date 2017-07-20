@@ -3,6 +3,7 @@ var path = require('path');
 var router = express.Router();
 var appRootDir = require('app-root-dir').get();
 var bodyParser = require('body-parser');
+const obj = require('mongodb').ObjectID
 var urlparser = bodyParser.urlencoded({ extended: false })
 
 //requiring the dataservice
@@ -22,17 +23,27 @@ router.get('/', function (req, res, next) {
             res.json(data)
         })
         .catch(err => res.json(err));
+});
 
+//get all posts
+router.post('/filter', function (req, res) {
+    let query
+    if (req.body.length !== 1)
+        query = `$and: ${req.body}`
+    else query = req.body[0]
+    
+    Post.get(query
+        ).then(data => {console.log(data)
+            res.json(data)
+        })
+        .catch(err => res.json(err));
+});
 
-});//checked
-
-
-//my own job posts( created jobs by the user)
-router.get('/mypost/:name', function (request, response) {
-    const uname = req.params.name;
-    Post.get({ 'createdBy': uname })
-        .then(p => { res.json(p) })
-        .catch(err => res.json(err))
+//get a single post
+router.post('/getPost', function (req, res) { 
+    Post.get({ "_id": obj(req.body.id) })
+        .then(data => res.json(data))
+        .catch(err => res.json(err));
 })
 
 router.post('/currentjob', (request, response) => {
@@ -78,11 +89,11 @@ router.post('/add', urlparser, (req, res) => {
 })//checked
 
 //get a single post
-// router.get('/:postid', function (request, response) {
-//     let postId = req.param('postid');
-//     let fetchString = { "_id": userId }
-//     let data = Post.get(fetchString);
-//     data.then(data => res.json(data)).catch(err => res.json(err));
+// router.get('/:id', function (request, response) {
+//     console.dir("id retrieved" + obj(req.params('id')));
+//     Post.get({ "_id": obj(req.params('id')) })
+//         .then(data =>{console.log('id '+req.params('postid')); data = res.json(data)})
+//         .catch(err => res.json(err));
 // })
 
 //my own job Applications (jobs done by the user)
