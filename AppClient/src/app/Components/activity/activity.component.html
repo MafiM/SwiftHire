@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-7">
-    <!-- <div class="panel">
+    <div class="panel">
       <h3> Job Activities </h3>
       <div *ngIf="userJobActivity; else noJob">
         <div *ngFor="let post of userJobActivity">
@@ -19,7 +19,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <ng-template #noJob>
       <p><i>You have 0 Activities</i></p>
@@ -30,7 +30,7 @@
       <div *ngIf="userPostActivity; else noPost">
         <div *ngFor="let post of userPostActivity">
           <div class="clearfix">
-            <h3 class="pull-left">{{post.title}}</h3>
+            <h3><a (click)="viewPost(post._id)">{{post.title}}</a></h3>
           </div>
           <div>
             <p>category: <span *ngIf="post.category">{{post.category}} </span> </p>
@@ -39,7 +39,7 @@
             <p>Hourly Fee :<span *ngIf="post.hourlyFee"> - {{post.hourlyFee}} </span></p>
             <p>Total Fee :<span *ngIf="post.duration"> - {{post.hourlyFee* 10}} </span></p>
             <p>Granted User(<span *ngIf="post.waitingList">{{post.waitingList.length}}</span>)</p>
-            <p><a href="">...more</a></p>
+            <p>comment(<span *ngIf="post.waitingList">{{post.comments}}</span>)</p>
             <a class="btn btn-primary" (click)="finish(post._id)">Finsh</a>
           </div>
         </div>
@@ -53,14 +53,14 @@
           <textarea id="comment" name="comment" type="text" placeholder="write comment here" class="input-xlarge" rows="15" cols="50"
             [formControl]="myForm.controls['comment']"></textarea>
         </div>
-      </div>
-      <div>
-        <div class="controls">
-          <input id="rating" name="rating" type="number" placeholder="rating " class="input-xlarge" [formControl]="myForm.controls['rating']">
+        <div>
+          <div class="controls">
+            <input id="rating" name="rating" type="number" placeholder="rating " class="input-xlarge" [formControl]="myForm.controls['rating']">
+          </div>
         </div>
-      </div>
-      <div>
-        <input type="submit" class="btn btn-primary" value="Post" />
+        <div>
+          <input type="submit" class="btn btn-primary" value="Post" />
+        </div>
       </div>
     </form>
   </div>

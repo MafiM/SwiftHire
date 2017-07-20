@@ -52,7 +52,7 @@ export class NewPostComponent implements OnInit {
   registerNewPost() {
 
     let postData = this.userPostData();
-    console.log("Data inside the Routing " + postData)
+    console.log(postData)
     this.service.addNewPost(postData).subscribe(data => {
       this.message = data;
       console.log(this.message)
@@ -76,8 +76,8 @@ export class NewPostComponent implements OnInit {
       'address': {
         'street': addData.street,
         'city': addData.city,
-        'State': addData.State,
-        'zipcode': addData.zipcode
+        'State': addData.region,
+        'zipcode': addData.zipCode
       },
       'createdOn': Date.now(),
       'createdBy': this.homeService.getUserName(),

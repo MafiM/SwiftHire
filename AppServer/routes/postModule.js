@@ -48,7 +48,6 @@ router.post('/getPost', function (req, res) {
 
 router.post('/currentjob', (request, response) => {
    const uname = request.body.userName;
-   console.log(uname);
     Post.get({ $and: [{ 'grantedTo.userName': uname }, { 'status': status.GRANTED }] })
         .then(p => response.json(p))
         .catch(err => response.json(err))
@@ -56,7 +55,6 @@ router.post('/currentjob', (request, response) => {
 //return all current posts for the user (activities)
 router.post('/currentpost', urlparser,(request, response) => {
     const uname = request.body.userName;
-    console.log(uname);
     Post.get({ $and: [{ 'createdBy': uname }, { 'status': status.GRANTED }] })
         .then(p => { response.json(p) })
         .catch(err => response.json(err))
@@ -65,7 +63,6 @@ router.post('/currentpost', urlparser,(request, response) => {
 //my own job posts( created jobs by the user)
 router.post('/mypost', urlparser,function (request, response) {
     const uname = request.body.userName;
-    //console.log(uname);
     Post.get({'createdBy': uname })
         .then(p => { response.json(p) })
         .catch(err => response.json(err))
@@ -82,11 +79,26 @@ router.post('/myjobapp', function (request, response, next) {
 //Add new post 
 router.post('/add', urlparser, (req, res) => {
     const newPost = new Post(req.body)
-    console.log(req.body)
     newPost.add().then(() => {
         res.json({ 'status': 'true' });
     }).catch(err => res.json(err))
 })//checked
+
+router.post('/addcomment', urlparser, (req, res) => {
+    const newPost = new Post(req.body)
+    console.log(req.body)
+    newPost.update().then(() => {
+        res.json({ 'status': 'true' });
+    }).catch(err => res.json(err))
+})
+
+router.post('/status', urlparser, (req, res) => {
+    let statusData= {"_id":obj(req.body.id),"status":status.COMPLETED}
+    const newPost = new Post(statusData)
+    newPost.update().then(() => {
+        res.json({ 'status': 'true' });
+    }).catch(err => res.json(err))
+})
 
 //get a single post
 // router.get('/:id', function (request, response) {

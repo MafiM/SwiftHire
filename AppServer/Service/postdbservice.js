@@ -1,8 +1,10 @@
 var express = require('express');
 var mongoose = require('mongoose')
+const obj = require('mongodb').ObjectID
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://admin1:admin1@ds161262.mlab.com:61262/swifthire', { useMongoClient: true })
+
 
 let postSchema = new mongoose.Schema({
     title: String,
@@ -14,12 +16,12 @@ let postSchema = new mongoose.Schema({
     preferredDate: Date,
     preferredTime: Date,
     status: String,
-    address     :   {
-                        street  :   String,
-                        city    :   String,     
-                        State   :   String,
-                        zipcode :   Number
-                    },
+    address: {
+        street: String,
+        city: String,
+        State: String,
+        zipcode: Number
+    },
     waitingList: [
         {
             userName: String,
@@ -37,8 +39,8 @@ let postSchema = new mongoose.Schema({
             notification: String
         }
     ],
-    createdOn   :   Date,
-    createdBy   :   String,
+    createdOn: Date,
+    createdBy: String,
     comments: [
         {
             commentBy: String,
@@ -48,7 +50,8 @@ let postSchema = new mongoose.Schema({
     ]
 })
 
-postSchema.statics.get = function (post) { console.log(post)
+postSchema.statics.get = function (post) {
+    console.log(post)
     return new Promise((res, rej) => {
         if (post === null) {
             rej({ 'message': 'post is null', 'status': false })
@@ -63,6 +66,7 @@ postSchema.statics.get = function (post) { console.log(post)
 
 postSchema.methods.add = function () {
     return new Promise((res, rej) => {
+         console.log(this); 
         this.save(function (err) {
             if (err) {
                 rej({ 'message': err, 'status': false })
@@ -76,9 +80,10 @@ postSchema.methods.add = function () {
 }
 postSchema.methods.update = function () {
     return new Promise((res, rej) => {
-        Post.get({ _id: this._id })
-            .then(post => { post = this; post.add() })
-            .catch((err) => rej({ 'message': err, 'status': false }));
+        Post.update({ _id: obj(this._id) }, {$set: this}, (err,data) => {
+            if(err) {throw err;}
+            else console.log('updated')
+        })
     })
 }
 postSchema.methods.remove = function (id) {
