@@ -22,8 +22,7 @@ import { ApplicationComponent } from './components/application/application.compo
 import { AuthService  } from './services/auth/auth.service';
 import { PostServiceService } from './services/post-service.service';
 import { UserService } from './services/user/user.service';
-
-import { HomeService  } from './services/home.service';
+import { HomeService  } from './services/home.service'
 
 const APP_ROUTES = [
   {path: 'login', component: LoginComponent},
@@ -31,9 +30,14 @@ const APP_ROUTES = [
     path: 'home', 
     component: HomeComponent, 
     children: [
+<<<<<<< HEAD
+      { path: 'main', component: MainComponent  },
+      { path: 'activities', component: ActivityComponent },
+=======
       { path: '', redirectTo: 'main', pathMatch: 'full' },
       { path: 'main', component: MainComponent},
       { path: 'activities', component: ActivityComponent  },
+>>>>>>> d7454c70cde5bbe7b509384976229554f2f4c047
       { path: 'myJob', component: MyJobComponent  },
       { path: 'myPost', component: MyPostComponent  },
       { path: 'notification', component: NotificationComponent  },
@@ -55,6 +59,7 @@ const APP_ROUTES = [
     NewPostComponent,
     MainComponent,
     ApplicationComponent,
+
   ],
   imports: [
     BrowserModule,

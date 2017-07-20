@@ -2,6 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { PostServiceService } from '../../services/post-service.service';
 import { HomeService } from '../../services/home.service';
 import { Observable } from 'rxjs';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+  FormArray
+} from "@angular/forms";
+
 @Component({
   selector: 'app-activity',
   templateUrl: './activity.component.html',
@@ -9,10 +17,17 @@ import { Observable } from 'rxjs';
 })
 export class ActivityComponent implements OnInit {
 
-  private userJobActivity;
-  private userPostActivity;
+  private userJobActivity=null;
+  private userPostActivity=null;
+  private pid;
+  private myForm: FormGroup;
 
-  constructor(private postService: PostServiceService) {
+  constructor(private postService: PostServiceService,private formBuilder: FormBuilder, private homeService: HomeService) {
+
+    this.myForm = formBuilder.group({
+      'comment': ["", Validators.required],
+      'rating': ["", Validators.required],
+    });
   }
 
   ngOnInit() {
@@ -39,4 +54,17 @@ export class ActivityComponent implements OnInit {
       throw err;
     });
   }
+  finish(val) {
+    this.pid=val;
+  }
+
+    addComment() {
+      let commentData = this.myForm;
+      return {
+        'commentBy': this.homeService.getUserName(),
+        'text': commentData.rating,
+        'timeStamp': Date.now(),
+        'pid':this.pid
+      }
+    }
 }

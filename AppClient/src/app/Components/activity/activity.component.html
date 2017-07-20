@@ -1,43 +1,70 @@
+<div class="row">
+  <div class="col-sm-7">
+    <!-- <div class="panel">
+      <h3> Job Activities </h3>
+      <div *ngIf="userJobActivity; else noJob">
+        <div *ngFor="let post of userJobActivity">
+          <div class="clearfix">
+            <h3 class="pull-left">{{post.title}}</h3>
+          </div>
+          <div>
+            <p>category: <span *ngIf="post.category">{{post.category}} </span> </p>
+            <p>Address<span *ngIf="post.address"> {{post.address.city}} - {{post.address.state}} </span></p>
+            <p>Duration<span *ngIf="post.duration"> - {{post.duration.value}} {{post.duration.unit}}</span></p>
+            <p>Hourly Fee :<span *ngIf="post.hourlyFee"> - {{post.hourlyFee}} </span></p>
+            <p>Total Fee :<span *ngIf="post.duration"> - {{post.hourlyFee* 10}} </span></p>
+            <p>Granted User(<span *ngIf="post.waitingList">{{post.granterTo.length}}</span>)</p>
+            <a href="">...more</a>
+            <button type="button" class="btn btn-primary">Primary</button>
+          </div>
+        </div>
+      </div>
+    </div> -->
 
-  <div class="panel">
-    <h1>My Current Activities</h1>
-  </div>
- 
- <div>
-  <div *ngIf="userJobActivity">
-    <h3>My Current Job Activities </h3>
-    <div *ngFor="let jobs of userJobActivity">
-      <h3>{{jobs.title}}</h3>
-      <p><span *ngIf="jobs.category">{{jobs.category}} </span>
-        <span *ngIf="jobs.address"> {{jobs.address.city}} - {{jobs.address.state}} </span>
-        <span *ngIf="jobs.duration"> - {{jobs.duration}} </span></p>
-      <p>
-        {{jobs.description}}
-      </p>
-      <a>...more</a>
-      <p>Submitted applications (<span *ngIf="jobs.waitingList">{{jobs.waitingList.length}}</span>)</p>
-      <p>Client: {{jobs.createdBy}} <span>***</span>
-        <hr>
+    <ng-template #noJob>
+      <p><i>You have 0 Activities</i></p>
+    </ng-template>
+
+    <div class="panel">
+      <h3> Job Activities </h3>
+      <div *ngIf="userPostActivity; else noPost">
+        <div *ngFor="let post of userPostActivity">
+          <div class="clearfix">
+            <h3 class="pull-left">{{post.title}}</h3>
+          </div>
+          <div>
+            <p>category: <span *ngIf="post.category">{{post.category}} </span> </p>
+            <p>Address<span *ngIf="post.address"> {{post.address.city}} , {{post.address.state}} </span></p>
+            <p>Duration<span *ngIf="post.duration"> - {{post.duration.value}} {{post.duration.unit}}</span></p>
+            <p>Hourly Fee :<span *ngIf="post.hourlyFee"> - {{post.hourlyFee}} </span></p>
+            <p>Total Fee :<span *ngIf="post.duration"> - {{post.hourlyFee* 10}} </span></p>
+            <p>Granted User(<span *ngIf="post.waitingList">{{post.waitingList.length}}</span>)</p>
+            <p><a href="">...more</a></p>
+            <a class="btn btn-primary" (click)="finish(post._id)">Finsh</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>  
-
- <div>
-  
-  <div *ngIf="userPostActivity">
-     <h3>My Current Post Activities </h3>
-    <div *ngFor="let post of userPostActivity">
-      <h3>{{post.title}}</h3>
-      <p><span *ngIf="post.category">{{post.category}} </span>
-        <span *ngIf="post.address"> {{post.address.city}} - {{post.address.state}} </span>
-        <span *ngIf="post.duration"> - {{post.duration}} </span></p>
-      <p>
-        {{post.description}}
-      </p>
-      <a>...more</a>
-      <p>Submitted applications (<span *ngIf="post.waitingList">{{post.waitingList.length}}</span>)</p>
-      <p>Client: {{post.createdBy}} <span>***</span>
-        <hr>
-    </div>
+  <div class="col-sm-5" *ngIf="pid">
+    <form [formGroup]="myForm" (ngSubmit)="addComment()">
+      <div class="control-group">
+        <div class="controls">
+          <textarea id="comment" name="comment" type="text" placeholder="write comment here" class="input-xlarge" rows="15" cols="50"
+            [formControl]="myForm.controls['comment']"></textarea>
+        </div>
+      </div>
+      <div>
+        <div class="controls">
+          <input id="rating" name="rating" type="number" placeholder="rating " class="input-xlarge" [formControl]="myForm.controls['rating']">
+        </div>
+      </div>
+      <div>
+        <input type="submit" class="btn btn-primary" value="Post" />
+      </div>
+    </form>
   </div>
-</div> 
+  <!--pid  -->
+  <ng-template #noPost>
+    <p><i>You have 0 Activities</i></p>
+  </ng-template>
