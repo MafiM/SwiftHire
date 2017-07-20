@@ -25,9 +25,22 @@ router.get('/', function (req, res, next) {
         .catch(err => res.json(err));
 });
 
+//get all posts
+router.post('/filter', function (req, res) {
+    let query
+    if (req.body.length !== 1)
+        query = `$and: ${req.body}`
+    else query = req.body[0]
+    
+    Post.get(query
+        ).then(data => {console.log(data)
+            res.json(data)
+        })
+        .catch(err => res.json(err));
+});
+
 //get a single post
 router.post('/getPost', function (req, res) { 
-    console.dir(obj(req.body.id))
     Post.get({ "_id": obj(req.body.id) })
         .then(data => res.json(data))
         .catch(err => res.json(err));

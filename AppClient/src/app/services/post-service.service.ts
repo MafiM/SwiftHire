@@ -19,6 +19,15 @@ export class PostServiceService {
     return this.http.get(this.postUrl).map(res => res.json())
   }
 
+  getFilteredPosts(filter) {
+     const filterBy = []
+     if (filter.category) { filterBy.push({'category':filter.category}) }
+     if (filter.hourlyFee) { filterBy.push({'hourlyFee':{'$gte':filter.hourlyFee}}) }
+     //if (filter.category) { filterBy.push({'category':filter.category}) }
+     //console.log(filterBy)
+    return this.http.post(`${this.postUrl}filter`, filterBy).map(res => res.json())
+  }
+
   //get user job applications
   getUserJobApplications() {
     if (!this.homeService.getUserName())

@@ -9,19 +9,22 @@ import { PostServiceService } from '../../services/post-service.service';
 })
 export class ApplicationComponent implements OnInit {
   private applyForm: FormGroup;
-  private message = null;
+  private name: String = '';
+  private about: String = ''
+  private exp: String = ''
   
   constructor(private formBuilder: FormBuilder, private service: PostServiceService) {
     this.applyForm = formBuilder.group({
-      'name': ["", Validators.required],
-      'about': [""],
-      'exp': ["", Validators.required],
+      'name': [null, Validators.required],
+      'about': [null],
+      'exp': [null, Validators.required],
     });
   }
-
   ngOnInit() {
   }
-  applyPost() {
+  applyPost(app) {
+    console.log(app)
+    console.log(this.applyForm.value)
     this.service.applyPost(this.applyForm.value)//.subscribe(data => {
     //   this.message = data;
     //   console.log(this.message)

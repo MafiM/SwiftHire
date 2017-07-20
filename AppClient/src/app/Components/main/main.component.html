@@ -1,11 +1,13 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <span>Search: </span>
-    <select class="input-sm">
-      <option>Select category</option>
+    <!--<span -->
+    <select class="input-sm" [(ngModel)]="categories[0]" (change)="categoryChanged($event.target.value)">      
+      <option value="">All</option>
+      <option *ngFor="let cat of categories" value="{{cat}}">{{cat}}</option>
     </select>
     <input type="text" class="input-sm" placeholder="Location">
-    <input type="text" class="input-sm" placeholder="Min Fee">
+    <input type="number" class="input-sm" placeholder="Min Fee" (keyup)="minFeeChanged($event.target.value)">
   </div>
 </div>
 <div class="row">

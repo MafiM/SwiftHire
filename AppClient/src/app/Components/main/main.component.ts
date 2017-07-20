@@ -12,11 +12,46 @@ import  'rxjs/Rx'
 export class MainComponent implements OnInit {
   posts : {}
   currentPost: {}
+  categories: String[] 
+  filter = {
+      'category'  :  null,
+      'location'  :  null,
+      'hourlyFee' :  ''
+    }
 
-  constructor(private postService: PostServiceService, private home:HomeService, private route: Router) { }
+  constructor(private postService: PostServiceService, private home:HomeService, private route: Router) { 
+    this.categories = []
+    
+  }
 
   ngOnInit() { 
-   this.postService.retrieveAllPosts()
+   this.loadPosts()
+   
+  }
+  loadPosts() {
+    this.postService.retrieveAllPosts()
+      .subscribe(
+          data  =>  { this.posts =  JSON.parse(data); this.getCategories()}, 
+          err   =>  { throw (err)});
+  }
+  getCategories() {
+    // this.categories = []
+    
+    for (let post in this.posts) {
+      if (this.posts[post].category && !this.categories.includes(this.posts[post].category))
+        this.categories.push(this.posts[post].category)
+    }
+  }
+  categoryChanged(val) {
+    this.filter.category = val
+     this.postService.getFilteredPosts(this.filter)
+      .subscribe(
+          data  =>  { this.posts =  JSON.parse(data); this.getCategories();}, 
+          err   =>  { throw (err)});
+  }
+  minFeeChanged(val){
+    this.filter.hourlyFee = val;
+    this.postService.getFilteredPosts(this.filter)
       .subscribe(
           data  =>  { this.posts =  JSON.parse(data); }, 
           err   =>  { throw (err)});

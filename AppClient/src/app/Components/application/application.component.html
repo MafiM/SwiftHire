@@ -1,5 +1,5 @@
 <h3>Fill out Application Form</h3>
-<form [formGroup]="applyForm" (ngSubmit)="applyPost()" class="form-horizontal" role="form">
+<form [formGroup]="applyForm" (ngSubmit)="applyPost(applyForm.value)" class="form-horizontal" role="form">
   <div class="form-group">
     <label class="control-label col-sm-3" for="name">Full Name: </label>
     <div class="controls col-sm-7">
@@ -18,10 +18,10 @@
     <div class="controls col-sm-7">
       <textarea name="exp" id="exp" class="form-control" [formControl]="applyForm.controls['exp']" rows="8"></textarea>
     </div>
-    <div class="errors" *ngIf="!myForm.controls['name'].valid">Required</div>
+    <div class="errors" *ngIf="!myForm.controls['exp'].valid">Required</div>
   </div>
   <div class="text-center">
-    <button type="submit" class="btn btn-primary">SUBMIT</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!applyForm.valid">SUBMIT</button>
     <button type="submit" class="btn btn-danger">CANCEL</button>
   </div>
 </form>
