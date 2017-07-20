@@ -62,7 +62,7 @@ export class ActivityComponent implements OnInit {
       let commentData = this.myForm;
       return {
         'commentBy': this.homeService.getUserName(),
-        'text': commentData.rating,
+        //'text': commentData.rating,
         'timeStamp': Date.now(),
         'pid':this.pid
       }
