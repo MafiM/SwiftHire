@@ -3,7 +3,7 @@ var path = require('path');
 var router = express.Router();
 var appRootDir = require('app-root-dir').get();
 var bodyParser = require('body-parser');
-const obj = require('mongodb').ObjectID
+const obj = require('mongodb').ObjectID;
 var urlparser = bodyParser.urlencoded({ extended: false })
 
 //requiring the dataservice
@@ -86,7 +86,31 @@ router.post('/add', urlparser, (req, res) => {
     newPost.add().then(() => {
         res.json({ 'status': 'true' });
     }).catch(err => res.json(err))
-})//checked
+})
+
+router.post('/apply', urlparser, (req, res) => {
+    Post.get({ "_id": obj(req.body.id) }).then(post => {
+        const userName = req.body.userName
+        const applicationDetail = req.body.body
+        console.log(post)
+        post.update().then(() => {
+            console.log('true');
+        }).catch(err => res.json(err))
+    }).catch(err => res.json(err))    
+})
+/*
+ waitingList: [
+        {
+            userName: String,
+            applicationDetails: {
+                fullName: String,
+                aboue: String,
+                exp:String,
+                createdOn: Date
+            },
+            notification: String
+        }
+    ],
 
 //get a single post
 // router.get('/:id', function (request, response) {
@@ -172,6 +196,6 @@ router.post('/add', urlparser, (req, res) => {
 //     result.then(data => { status: "post sucessfully removed!" })
 //         .catch(err => res.send(err));
 
-// })
+// })*/
 
 module.exports = router;

@@ -1,3 +1,5 @@
+
+
 <form [formGroup]="myForm" (ngSubmit)="registerNewPost()">
   <!-- Title input-->
   <div class="control-group">
@@ -109,7 +111,6 @@
     </div>
     <div class="errors" *ngIf="!myForm.controls['zipCode'].valid">Required</div>
   </div>
-
+  <input type="hidden" name="location" [formControl]="myForm.controls['location']"/>
   <input type="submit" class="btn btn-primary" value="Register" [disabled]="!myForm.valid" />
-
 </form>

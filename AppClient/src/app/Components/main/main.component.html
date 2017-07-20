@@ -16,8 +16,9 @@
       <div *ngFor="let post of posts">  
         <h3><a (click)="viewPost(post._id)">{{post.title}}</a></h3>
           <p><span *ngIf="post.category">{{post.category}} </span>
-          <span *ngIf="post.address"> {{post.address.city}} - {{post.address.state}} </span> 
+          <span *ngIf="post.address"> {{post.address.city}} - {{post.hourlyFee}} </span> 
           <span *ngIf="post.duration"> - {{post.duration}} </span></p>
+          <p><span *ngIf="post.createdOn">Posted On:{{post.createdOn}} </span>
           <p>
             {{post.description}}
           </p>
@@ -28,7 +29,7 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-5 panel">
+  <div class="col-sm-5 panel currentPost">
     <div *ngIf="currentPost">
       <h4>{{currentPost.title}}</h4>
       <p><i>Posted by: </i>{{currentPost.createdBy}}</p>

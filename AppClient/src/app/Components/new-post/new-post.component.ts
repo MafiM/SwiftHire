@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LocationService } from '../../services/location.service';
 import {
   FormGroup,
   FormControl,
@@ -19,6 +20,7 @@ export class NewPostComponent implements OnInit {
 
   private myForm: FormGroup;
   private message = null;
+  private result
 
   private status = {
     NEW: 'new',
@@ -28,8 +30,8 @@ export class NewPostComponent implements OnInit {
     EXPIRED: 'expired'
   }
 
-  constructor(private formBuilder: FormBuilder, private service: PostServiceService, private homeService: HomeService) {
-
+  constructor(private formBuilder: FormBuilder, private service: PostServiceService, private location: LocationService, private homeService: HomeService) {
+    
     this.myForm = formBuilder.group({
       'title': ["", Validators.required],
       'description': ['', Validators.required],
@@ -43,6 +45,7 @@ export class NewPostComponent implements OnInit {
       'city': ['', Validators.required],
       'region': ['', Validators.required],
       'zipCode': ['', Validators.required],
+      'location': [''],
     });
 
   }
@@ -51,36 +54,38 @@ export class NewPostComponent implements OnInit {
 
   registerNewPost() {
 
-    let postData = this.userPostData();
-    console.log("Data inside the Routing " + postData)
-    this.service.addNewPost(postData).subscribe(data => {
-      this.message = data;
-      console.log(this.message)
-    }, err => {
-      throw err;
-    });
+    let postData = this.userPostData()
+    // this.service.addNewPost(postData).subscribe(data => {
+    //   this.message = data;
+    //   console.log(this.message)
+    // }, err => {
+    //   throw err;
+    // });
   }
 
   userPostData() {
     let addData = this.myForm.value;
-   return {
-      'title': addData.title,
-      'description': addData.description,
-      'category': addData.category,
-      'location': ["String", "String"],
-      'duration': { value: addData.durationValue, unit: addData.durationUnit },
-      'hourlyFee': addData.hourlyFee,
-      'preferredDate': addData.preferedDate,
-      'preferredTime': addData.preferedTime,
-      'status': this.status.NEW,
-      'address': {
-        'street': addData.street,
-        'city': addData.city,
-        'State': addData.State,
-        'zipcode': addData.zipcode
-      },
-      'createdOn': Date.now(),
-      'createdBy': this.homeService.getUserName(),
-    }
+    console.log('location: '+addData.location)
+    return {
+        'title': addData.title,
+        'description': addData.description,
+        'category': addData.category,
+        'location': ["String", "String"],
+        'duration': { value: addData.durationValue, unit: addData.durationUnit },
+        'hourlyFee': addData.hourlyFee,
+        'preferredDate': addData.preferedDate,
+        'preferredTime': addData.preferedTime,
+        'status': this.status.NEW,
+        'address': {
+          'street': addData.street,
+          'city': addData.city,
+          'State': addData.region,
+          'zipcode': addData.zipCode
+        },
+        'createdOn': Date.now(),
+        'createdBy': this.homeService.getUserName(),
+      }
+
+   
   }
 }

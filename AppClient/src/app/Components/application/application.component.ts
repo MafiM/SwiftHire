@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,  FormControl,  Validators,  FormBuilder,  FormArray} from "@angular/forms";
 import { PostServiceService } from '../../services/post-service.service';
+import { HomeService } from '../../services/home.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-application',
@@ -12,24 +14,39 @@ export class ApplicationComponent implements OnInit {
   private name: String = '';
   private about: String = ''
   private exp: String = ''
+  private success: boolean;
   
-  constructor(private formBuilder: FormBuilder, private service: PostServiceService) {
+  constructor(private formBuilder: FormBuilder, 
+      private service: PostServiceService,
+      private home:HomeService,      
+      private route: Router) {
     this.applyForm = formBuilder.group({
-      'name': [null, Validators.required],
-      'about': [null],
-      'exp': [null, Validators.required],
-    });
+      'name': ['', Validators.required],
+      'about': '',
+      'exp': ['', Validators.required],
+    });    
   }
   ngOnInit() {
+    this.success = false;
   }
   applyPost(app) {
-    console.log(app)
-    console.log(this.applyForm.value)
-    this.service.applyPost(this.applyForm.value)//.subscribe(data => {
-    //   this.message = data;
-    //   console.log(this.message)
-    // }, err => {
-    //   throw err;
-    // });
+      let applicationDetails= {
+          fullName: app.name,
+          about: app.about,
+          exp:app.exp,
+          createdOn: Date.now()
+      }
+
+      this.service.applyPost(this.home.getCurrentPost,app)
+        .subscribe(
+          () => {
+            console.log('data');
+            //this.success = true
+            //setTimeout(()=>this.route.navigateByUrl('home'),0)
+          },
+          err => console.log(err));
+  }
+  cancel(){
+    this.route.navigateByUrl('home')
   }
 }

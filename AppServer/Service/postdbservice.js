@@ -24,7 +24,9 @@ let postSchema = new mongoose.Schema({
         {
             userName: String,
             applicationDetails: {
-                summary: String,
+                fullName: String,
+                about: String,
+                exp:String,
                 createdOn: Date
             },
             notification: String
@@ -53,7 +55,11 @@ postSchema.statics.get = function (post) { console.log(post)
         if (post === null) {
             rej({ 'message': 'post is null', 'status': false })
         } else {
-            Post.find(post, function (err, data) {
+            // Post.find(post, function (err, data) {
+            //     if (err) rej({ 'message': err, 'status': false })
+            //     res(JSON.stringify(data))
+            // })
+            Post.find(post).sort({'createdOn':-1}).limit(3, function (err, data) {
                 if (err) rej({ 'message': err, 'status': false })
                 res(JSON.stringify(data))
             })
@@ -76,9 +82,10 @@ postSchema.methods.add = function () {
 }
 postSchema.methods.update = function () {
     return new Promise((res, rej) => {
-        Post.get({ _id: this._id })
-            .then(post => { post = this; post.add() })
-            .catch((err) => rej({ 'message': err, 'status': false }));
+        Post.update({ _id: obj(this._id) }, {$set: this}, (err,data) => {
+            if(err) {throw err;}
+            else console.log('updated')
+        })
     })
 }
 postSchema.methods.remove = function (id) {

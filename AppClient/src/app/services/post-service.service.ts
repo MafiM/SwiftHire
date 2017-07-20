@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, Request } from '@angular/http'
 import 'rxjs/Rx';
+import $ from "jquery";
 
 import { HomeService } from '../services/home.service';
 
@@ -18,7 +19,6 @@ export class PostServiceService {
   retrieveAllPosts() {
     return this.http.get(this.postUrl).map(res => res.json())
   }
-
   getFilteredPosts(filter) {
      const filterBy = []
      if (filter.category) { filterBy.push({'category':filter.category}) }
@@ -69,8 +69,13 @@ export class PostServiceService {
     return this.http.post(this.postUrl + 'getPost', {'id':id})
           .map(res=> res.json() )
   }
-  applyPost(body) {
-    console.log(body)
-    
+  applyPost(pid, body) {
+    let obj = {
+      'id' : pid,
+      'userName' : this.homeService.getUserName(),
+      'applicationDetail' : body
+    }
+    return this.http.post(this.postUrl + 'apply',obj)
+          .map(res=> res.json() )
   }
 }

@@ -1,6 +1,6 @@
  <div class="container">
   <div>
-    <ul class="breadcrumb">
+    <ul class="breadcrumb menu">
       <li><a [routerLink]="['main']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a></li>
       <li><a [routerLink]="['activities']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Activities</a></li>
       <li><a [routerLink]="['myJob']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">My Job Application</a></li>
@@ -10,7 +10,7 @@
       <li><a *ngIf="auth.isAuthenticated()" (click)="auth.logout()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Logout</a></li>
     </ul>
   </div>
-  <div class="row">
+  <div class="row wrapper">
     <div class="panel panel-default col-sm-2" style="overflow:hidden">
       <div class="panel-body">
        <img src='{{loggedInUser?.picture}}}' style="height: 100px;width: 100px" />
