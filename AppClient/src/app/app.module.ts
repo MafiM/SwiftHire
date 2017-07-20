@@ -21,8 +21,7 @@ import { LoginGuard } from "./services/login.guard";
 import { AuthService  } from './services/auth/auth.service';
 import { PostServiceService } from './services/post-service.service';
 import { UserService } from './services/user/user.service';
-
-import { HomeService  } from './services/home.service';
+import { HomeService  } from './services/home.service'
 
 const APP_ROUTES = [
   {path: 'login', component: LoginComponent},
@@ -31,11 +30,11 @@ const APP_ROUTES = [
     component: HomeComponent, 
     children: [
       { path: 'main', component: MainComponent  },
-      { path: 'activities', component: ActivityComponent  },
+      { path: 'activities', component: ActivityComponent },
       { path: 'myJob', component: MyJobComponent  },
       { path: 'myPost', component: MyPostComponent  },
       { path: 'notification', component: NotificationComponent  },
-      { path: 'newPost', component: NewPostComponent  }
+      { path: 'newPost', component: NewPostComponent  },
     ],CanActivate:[LoginGuard]
   },
 ]
@@ -50,7 +49,7 @@ const APP_ROUTES = [
     MyPostComponent,
     NotificationComponent,
     NewPostComponent,
-    MainComponent
+    MainComponent,
   ],
   imports: [
     BrowserModule,

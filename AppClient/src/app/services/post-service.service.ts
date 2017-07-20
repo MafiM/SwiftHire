@@ -48,6 +48,11 @@ export class PostServiceService {
     return this.http.post(`${this.postUrl}mypost`, this.bodyData).map((res: Response) => res.json());
   }
 
+  //add comment
+  addComment(body){
+    return this.http.post(this.postUrl + 'add', body).map((res: Response) => res.json());
+  }
+
   //add new post 
   addNewPost(body) {
     return this.http.post(this.postUrl + 'add', body).map((res: Response) => res.json());
